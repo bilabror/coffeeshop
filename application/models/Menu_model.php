@@ -1,0 +1,98 @@
+<?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+
+class Menu_Model extends CI_Model {
+
+  var $table = 'menu';
+
+  public function __construct() {
+    parent::__construct();
+    $this->load->database();
+    $this->load->library('Datatables');
+  }
+
+  private function _config_datatables() {
+    $this->datatables->table = $this->table;
+    $this->datatables->column_order = ['urutan',
+      'menu',
+      'title',
+      'icon',
+      'tipe',
+      'status',
+      null];
+    $this->datatables->column_search = ['menu'];
+    $this->datatables->order = ['urutan' => 'asc'];
+  }
+
+  public function get_datatables() {
+    $this->_config_datatables();
+    $list = $this->datatables->get_datatables();
+    $data = [];
+    $no = $_POST['start'];
+    foreach ($list as $ls) {
+      $no++;
+      $row = [];
+      $row[] = $ls->urutan;
+      $row[] = $ls->menu;
+      $row[] = $ls->title;
+      $row[] = '<i class="'.$ls->icon.'"></i>';
+      if ($ls->tipe == 1) {
+        $row[] = 'biasa';
+      } else {
+        $row[] = 'dropdown';
+      }
+      $ls->is_active > 0 ?
+      $row[] = '<td><label><input type="checkbox" name="custom-switch-checkbox" checked="checked" class="custom-switch-input" onclick="status('."'".$ls->id."'".')"> <span class="custom-switch-indicator"></span></label></tr>'
+      : $row[] = '<td><label><input type="checkbox" name="custom-switch-checkbox" class="custom-switch-input" onclick="status('."'".$ls->id."'".')"> <span class="custom-switch-indicator"></span></label></tr>';
+      $row[] = '<a class="m-2" href="javascript:void(0)" title="Edit" onclick="edit('."'".$ls->id."'".')"><i class="fa fa-edit"></i></a><a class="m-2" href="javascript:void(0)" title="Hapus"
+                  onclick="delete_menu('."'".$ls->id."'".','."'".$ls->menu."'".')"><i class="fa fa-trash"></i></a><a href="javascript:void(0)" class="m-2" onclick="naikan('."'".$ls->id."'".','."'".$ls->urutan."'".')"><i class="fa fa-sort-up"></i></a> <a href="javascript:void(0)" class="m-2" onclick="turunkan('."'".$ls->id."'".','."'".$ls->urutan."'".')"><i class="fa fa-sort-down"></i></a>';
+      $data[] = $row;
+    }
+
+    $output = [
+      "draw" => $_POST['draw'],
+      "recordsTotal" => $this->datatables->count_all(),
+      "recordsFiltered" => $this->datatables->count_filtered(),
+      "data" => $data,
+    ];
+    echo json_encode($output);
+  }
+
+
+
+
+  // GET BERDASARKAN ID
+  public function get_by_id($id) {
+    $this->db->from($this->table);
+    $this->db->where('id', $id);
+    $query = $this->db->get();
+    return $query->row();
+  }
+
+  // INSERT DATA
+  public function insert($data) {
+    $this->db->insert($this->table, $data);
+    return $this->db->insert_id();
+  }
+
+  // UPDATE DATA
+  public function update($data, $where) {
+    $this->db->update($this->table, $data, $where);
+    return $this->db->affected_rows();
+  }
+
+  // DELETE DATA
+  public function delete_by_id($id) {
+    $this->db->where('id', $id);
+    $this->db->delete($this->table);
+  }
+
+  public function get_all() {
+    return $this->db->get($this->table)->result_array();
+  }
+
+  public function get_where($where) {
+    return $this->db->get_where($this->table, $where);
+  }
+
+}

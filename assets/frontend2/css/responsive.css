@@ -1,0 +1,246 @@
+@media screen and (max-width: 1199) {
+  .container-tentang {
+    margin-top: 100px;
+    background: -webkit-gradient(linear, left top, left bottom, from(#28ca71), to(#00b14f));
+    background: linear-gradient(#28ca71, #00b14f);
+    color: #fff !important;
+  }
+  .container-tentang .tentang {
+    padding: 50px 0px;
+  }
+  .container-tentang .tentang .lr {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+  }
+  .container-tentang .tentang .lr .left .container-slider {
+    width: 600px;
+    height: 300px;
+    overflow: hidden;
+  }
+  .container-tentang .tentang .lr .left .container-slider .slider {
+    width: 300%;
+    list-style: none;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    padding: 0;
+  }
+  .container-tentang .tentang .lr .left .container-slider .slider li {
+    width: calc( 100% / 3);
+    position: relative;
+    overflow: hidden;
+    left: 0px;
+    -webkit-animation: slider 20s infinite;
+            animation: slider 20s infinite;
+  }
+  .container-tentang .tentang .lr .left .container-slider .slider li img {
+    width: 100%;
+  }
+  .container-tentang .tentang .lr .right {
+    padding: 25px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+  }
+}
+
+@media screen and (max-width: 991px) {
+  .container-tentang {
+    margin-top: 100px;
+    background: -webkit-gradient(linear, left top, left bottom, from(#28ca71), to(#00b14f));
+    background: linear-gradient(#28ca71, #00b14f);
+    color: #fff !important;
+  }
+  .container-tentang .tentang {
+    padding: 50px;
+  }
+  .container-tentang .tentang .lr {
+    display: block;
+  }
+  .container-tentang .tentang .lr .right {
+    padding: 25px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+  }
+  .kategori li {
+    margin: 5px;
+  }
+  .sideBoxCheckout {
+    position: relative !important;
+  }
+  .reviewProduct {
+    text-align: center !important;
+  }
+}
+
+@media screen and (max-width: 766px) {
+  .kategori.dekstop {
+    display: block;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  nav.navbar .right a.login {
+    padding: 5px 10px;
+    border-radius: 20px;
+  }
+  nav.navbar .right i {
+    padding: 10px;
+    margin-right: 3px;
+  }
+  nav.navbar .right form {
+    margin-right: 3px;
+  }
+  nav.navbar .right form input.form-control {
+    padding-left: 10px;
+    width: 190px;
+  }
+  .container-tentang .container {
+    margin: 0;
+  }
+  .container-tentang .tentang {
+    padding: 50px 30px;
+  }
+  .kategori {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    list-style: none;
+  }
+  .kategori.dekstop {
+    display: none;
+  }
+  .kategori.mobile {
+    visibility: visible;
+  }
+  .search-desktop {
+    display: none;
+  }
+  .offcanvas {
+    height: 350px;
+  }
+  .offcanvas .inputMessageCount {
+    margin-top: 30px;
+  }
+  .rincian {
+    padding: 0px 30px;
+  }
+  .rincian p strong {
+    display: block;
+  }
+  .invoiceTitle {
+    font-size: 45px;
+  }
+  .dateInvoice {
+    font-size: 17px;
+  }
+}
+
+@media screen and (max-width: 663px) {
+  nav.navbar .right i.navBottomToggle {
+    display: block;
+  }
+  nav.navbar .right form {
+    display: none;
+  }
+  .navBottom {
+    display: block;
+  }
+  .navBottom.show {
+    bottom: 0;
+  }
+  .container-tentang .container {
+    margin: auto;
+  }
+  .container-tentang .container .tentang .lr .left .container-slider {
+    width: 400px;
+    height: 250px;
+  }
+  .container-tentang .container .tentang .lr .left .container-slider .slider li {
+    -webkit-animation: slider2 20s infinite;
+            animation: slider2 20s infinite;
+  }
+  .orderContainer, .keranjangContainer {
+    padding: 20px 5px;
+  }
+  .orderContainer h1, .keranjangContainer h1 {
+    text-align: center;
+  }
+  .orderContainer .orderTable, .orderContainer .keranjangTable, .keranjangContainer .orderTable, .keranjangContainer .keranjangTable {
+    bottom: 0;
+  }
+  .orderContainer .orderTable th, .orderContainer .orderTable tr, .orderContainer .keranjangTable th, .orderContainer .keranjangTable tr, .keranjangContainer .orderTable th, .keranjangContainer .orderTable tr, .keranjangContainer .keranjangTable th, .keranjangContainer .keranjangTable tr {
+    text-align: center;
+  }
+  .gambarKeranjang {
+    display: block;
+  }
+  .desktopOpsi {
+    display: none;
+  }
+  .mobileOpsi {
+    display: block;
+  }
+}
+
+@media screen and (max-width: 475px) {
+  .container-tentang .container {
+    margin: auto;
+  }
+  .container-tentang .container .tentang {
+    padding: 50px 10px;
+  }
+  .container-tentang .container .tentang .lr .left .container-slider {
+    width: 400px;
+    margin: auto;
+  }
+  main.detail .detailProduk .titleDetail {
+    text-align: center;
+  }
+  main.detail .detailProduk form button.tambahKeranjang {
+    color: #fff;
+    width: 49%;
+  }
+  main.detail .detailProduk form a.tanyaProduk {
+    width: 49%;
+  }
+  .mading section {
+    padding: 5px;
+  }
+  .mading section ul {
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+  }
+  .mading section ul li {
+    list-style: none;
+    padding: auto 5px;
+    margin: 5px;
+  }
+}
+
+@media screen and (max-width: 443px) {
+  .container-tentang .container {
+    margin: auto;
+  }
+  .container-tentang .container .tentang .lr .left .container-slider {
+    width: 320px;
+    height: 230px;
+  }
+  .container-tentang .container .tentang .lr .left .container-slider .slider li {
+    -webkit-animation: slider2 20s infinite;
+            animation: slider2 20s infinite;
+  }
+  .glider-next, .glider-prev {
+    display: none;
+  }
+}
+/*# sourceMappingURL=responsive.css.map */

@@ -1,0 +1,559 @@
+$primary: #00b14f;
+$red: #db3a34
+$blue: #13b79d
+
+@mixin banner()
+    background-color: $primary
+    padding: 10px
+    border-radius: 50%
+    width: 50px
+    height: 50px
+    display: inline-flex
+    align-items: center
+    justify-content: center
+    
+body
+    overflow-x: hidden
+a
+    text-decoration: none
+.navbar-light
+    .navbar-toggler
+        color: rgba(0, 0, 0, 0)
+        border: none !important
+        i
+            color: $primary
+
+.title
+    text-transform: uppercase
+    font-weight: bold
+    position: relative
+    i.fa-circle
+        font-size: 15px
+        top: 5px
+        margin-left: 10px
+        position: absolute
+    
+nav.navbar
+    background-color: #f8f6f2 !important
+    transition: 0.3s
+    box-shadow: 0 6px 10px rgba(0, 0, 0,0.3 )
+    display: flex
+    justify-content: space-between
+    a.navbar-brand
+        color: #00b14f
+    .input-group
+        .form-control
+            border-radius: 20px 0 0 20px !important
+        .input-group-text
+            border-radius: 0 20px 20px 0 !important
+            i
+                color: #fff
+    .right
+        display: flex
+        a.login
+            background-color: #00b14f
+            padding: 1px 20px
+            border-radius: 20px
+            color: #fff
+            text-decoration: none
+        a.login.signin
+            border: 1px solid #00b14f
+            background-color: transparent
+            color: #00b14f
+        i
+            padding: 10px
+            border-radius: 50%
+            color: #757575
+            box-sizing: border-box
+            margin-right: 30px
+            font-size: 19px
+            &.navBottomToggle
+                display: none
+        form
+            margin-right: 30px
+            display: block
+            input.form-control
+                border-radius: 40px
+                border-color: #00b14f
+                padding-left: 20px
+
+
+.navBottom
+    position: fixed
+    bottom: -100px
+    left: 0
+    right: 0
+    z-index: 1000
+    padding: 10px
+    background-color: #f8f6f2
+    box-shadow: 0 0 12px rgba(0, 0, 0,0.5 )
+    transition: 0.3s
+    display: none
+    &.show
+        bottom: 0
+    input
+        width: 80%
+        margin: auto
+        border: 1px solid $primary
+        color: $primary
+
+.glider-contain
+    margin-top: 60px
+    margin-bottom: 80px
+    .glider
+        .card
+            width: 200px
+            .card-title
+                color: #333
+
+.glider-slide
+    width: 220px !important
+    margin-right: 65px
+.glider-track
+    width: auto !important
+    height: 350px
+
+
+.kategori
+    display: flex
+    list-style: none
+    padding-left: 0 !important
+    li
+        margin: 0 10px 
+        border: 2px solid #00b14f
+        border-radius: 13px
+        padding: 0 10px
+        transition: 0.3s
+        a
+            text-decoration: none !important
+            color: #00b14f
+            font-size: 16px 
+        &.active
+            background-color: $primary
+            box-shadow: 0 0 12px $primary
+            a
+                color: #fff
+        &:hover
+            box-shadow: 0 0 8px $primary
+    &.mobile
+        visibility: hidden
+        // label.input-group-text
+        //     background-color: $primary
+        //     border: 1px solid $primary
+        //     color: #fff
+        select.form-select
+            border: 1px solid $primary
+            
+
+
+.listKopi
+    .row
+        display: flex
+        justify-content: center
+    .card
+        margin-top: 20px
+
+.container-tentang
+    margin-top: 100px
+    background: linear-gradient(#28ca71, #00b14f)
+    color: #fff !important
+    .tentang
+        padding: 50px
+        .lr
+            display: flex
+            .left
+                .container-slider
+                    width: 600px
+                    height: 300px
+                    overflow: hidden
+                    .slider
+                        width: 300%
+                        list-style: none
+                        display: flex
+                        padding: 0
+                        li
+                            width: calc( 100% / 3 )
+                            position: relative
+                            overflow: hidden
+                            left: 0px
+                            animation: slider 20s infinite
+                            img
+                                width: 100%
+            .right
+                padding: 25px
+                display: flex
+                align-items: center
+
+.bantuan
+    margin-top: 100px
+    .row-bantuan
+        display: flex
+        justify-content: center
+        .card
+            margin: 10px 0
+
+footer
+    margin-top: 100px
+    text-align: center
+    background-color: #00b14f
+    padding: 10px
+    color: #fff
+    font-size: 14px
+
+.card
+    position: relative
+    &:hover
+        box-shadow: 0 0 12px rgba(0, 0, 0, 0.4)
+    .discount
+        position: absolute
+        padding-left: 5px
+        background-color: #e43030
+        border-radius: 0 0 50% 0
+        padding: 7px
+        height: 30px
+        margin-top: 10px
+        font-size: 15px
+        white-space: nowrap
+        display: flex
+        align-items: center
+        color: #fff
+        top: -10px
+        font-weight: bold
+    .card-title
+        // color: #00b14f
+        color: #333
+        font-weight: 600
+    div.card-text
+        font-size: 14px
+        display: flex
+        justify-content: space-between
+        .category
+            background-color: #3cc479
+            color: #fff
+            padding: 1px 5px
+            border-radius: 15px
+        .harga
+            background-color: #306cbb
+            color: #fff
+            padding: 1px 5px
+            border-radius: 15px
+    .contact
+        display: flex
+        justify-content: space-around
+        a
+            color: #fff
+            padding: 2px 5px
+            border-radius: 5px
+            text-decoration: none
+            &:nth-child(1)
+                background-color: #00a357
+            &:nth-child(2)
+                background-color: #d32e2a
+
+.glider-dot.active
+    background: #00b14f
+
+form
+    .input-group-text
+        background-color: #00b14f
+
+
+
+// detail
+main.detail
+    margin-top: 150px
+    img
+        width: 100%
+    .swapTogller
+        margin-top: 30px
+        background-color: #faf8f8
+        padding: 10px
+        border-radius: 5px
+        ul
+            display: flex
+            justify-content: center
+            margin: 0 !important
+            padding: 0 !important
+            li
+                width: 80px
+                height: 80px
+                list-style: none
+                margin: 0 10px
+                img
+                    width: 100%
+                    cursor: pointer
+    .detailProduk
+        .titleDetail
+            margin: 20px 0 40px 0
+            .produk
+                font-weight: bold
+            .harga
+                color: #28bda5
+                font-weight: bold
+        table.tentangProduk
+            margin-bottom: 50px
+            justify-content: space-between
+        button.tambahKeranjang
+            background-color: $primary !important
+            color: #fff
+            width: 60%
+        a.tanyaProduk
+            width: 35%
+            background-color: #db3a34 !important
+            color: #fff
+
+
+.deskripsi
+    .table
+        p
+            display: none
+            &.show
+                display: block
+
+.mading
+    background-color: #faf8f8
+    border-radius: 8px
+    section
+        padding: 20px;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        ul
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 20px
+            padding: 0 !important
+            white-space: nowrap
+            li
+                list-style: none;
+                padding: 12px 20px 5px 12px;
+                margin: 5px;
+                letter-spacing: 1px;
+                cursor: pointer;
+                border-bottom: 5px solid rgba(0, 0, 0, 0)
+                border-radius: 0 0 7px 7px
+                &.active
+                    color: $primary;
+                    border-bottom: 5px solid $primary
+        .text 
+            min-height: 250px
+            padding: 20px
+            .textBox.hide
+                display: none;
+
+
+
+// Profile
+.profileContainer
+    margin-top: 100px
+    .profile
+        width: 100%
+        img
+            width: 100% !important
+    .form
+        position: relative
+        table
+            position: absolute
+            top: 50%
+            left: 0
+            right: 0
+            transform: translateY(-50%)
+        .buttonEdit
+            position: absolute
+            bottom: 0
+            left: 0
+            right: 0
+            justify-content: space-around
+            button
+                width: 60% 
+                background: $primary
+                color: #fff
+            a
+                width: 30%
+        .buttonProfile
+            position: absolute
+            bottom: 0
+            width: 100%
+        a.edit, button.edit, a.btn.profile
+            margin: auto
+            width: 70%
+            background: $primary
+            color: #fff
+        a.btn.edit
+            width: 30%
+            background-color: $red
+        button.btn.edit
+            width: 55%
+
+// Order
+.orderBody
+    background-color: #eaeaea
+.orderContainer, .keranjangContainer
+    margin-top: 120px
+    background-color: #fff
+    padding: 20px 50px
+    border-radius: 12px
+    box-shadow: 0 10px 12px rgba(0, 0, 0, 0.3)
+    position: relative
+    h1
+        margin-bottom: 40px
+        color: #333
+        text-transform: uppercase
+    .orderTable, .keranjangTable
+        margin-bottom: 80px
+        button.dropdown-toggle
+    .orderFooter, .keranjangFooter
+        position: absolute
+        left: 0
+        right: 0
+        bottom: 0
+    .totalBayar
+        border: 1px solid #d1d1d3
+        padding: 20px
+        box-sizing: border-box
+        border-radius: 8px
+        margin-bottom: 80px
+        color: #4a4b4c
+        h4
+            font-weight: 600
+            color: #333
+            span
+                color: #13b79d
+                font-weight: normal
+        button
+            background-color: $primary 
+            color: #fff
+
+a.cart
+    background-color: #3cc479
+    padding: 2px !important
+    width: 100%
+    
+.poin
+    background-color: $primary
+    color: white
+    padding: 3px 10px
+    border-radius: 5px 
+    i
+        color: white !important
+        margin: 0 !important
+        padding: 0 !important
+        margin-right: 5px !important
+
+.mobileOpsi
+    display: none
+// span.stok
+//     font-size: 9px;
+//     bottom: -8px;
+//     right: -10px;
+span.stok
+    left: -7px
+    right: -7px
+    margin-top: 5px
+li.list-style
+    list-style: none
+.dropdown-toggle::after
+    display: none !important
+
+nav.navbar
+    .right
+        i:hover
+            color: $primary
+
+.sideBoxCheckout
+    border: 1px solid $primary
+    span.badge
+        background-color: $primary
+
+.popupDiscount
+    font-size: 
+    
+.offcanvas
+    height: 230px
+.card-body
+    padding-bottom: 0px !important
+
+.notif
+    width: 40px
+    height: 40px
+
+.list-group
+    .list-group-item.track
+        border-radius: 0 !important
+        border-bottom: 0 !important
+        border-top: 0 !important
+        border-right: 0 !important
+.activePagination
+    font-weight: bold
+    background-color: red
+.banner
+    margin-top: 130px
+    h2
+        color: $primary
+        .logo
+            @include banner()
+
+.formLR
+    transform: translate(-50%, -50%)
+    max-width: 800px
+    &::after
+        content: ""
+        clear: both
+        display: table
+    i.logo
+        @include banner()
+    .rowForm
+        box-shadow: 0 3px 3px $primary
+        .formLeft
+            background-image: url(../img/slider/1.jpg)
+            background-size: cover
+            background-position: center
+
+.btn-sukses
+    background-color: $primary
+    &:hover
+        box-shadow: 0 0 15px rgba(0, 177, 79, 0.5)
+
+@keyframes slider
+    0%
+      left: 0  
+    33%
+        left: 0
+    38%
+        left: -600px
+    68%
+        left: -600px
+    73%
+        left: -1200px
+    100%
+        left: -1200px
+
+@keyframes slider2
+    0%
+      left: 0  
+    33%
+        left: 0
+    38%
+        left: -400px
+    68%
+        left: -400px
+    73%
+        left: -800px
+    100%
+        left: -800px
+
+@keyframes slider2
+    0%
+        left: 0  
+    33%
+        left: 0
+    38%
+        left: -320px
+    68%
+        left: -320px
+    73%
+        left: -640px
+    100%
+        left: -640px

@@ -1,0 +1,52 @@
+<div class="main-content">
+<section class="section">
+<div class="section-header">
+<h1><?=$title; ?></h1>
+<?php $this->load->view('_layouts/breadcrumb') ?>
+</div>
+<div class="section-body">
+<div class="row">
+<div class="col-12 col-md-12 col-lg-12">
+<div class="card">
+<div class="card-header">
+<h4>Produk Terjual</h4>
+</div>
+<div class="card-body">
+<canvas id="myChart"></canvas>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</dvi>
+
+<?php $this->load->view('_layouts/js.php'); ?>
+<script src="<?= base_url('stisla/'); ?>assets/modules/chart.min.js"></script>
+<script src="<?= base_url('stisla/'); ?>assets/modules/bootstrap-daterangepicker/daterangepicker.js"></script>
+<script>
+
+let ctx = $("#myChart").html('2d');
+let myChart = new Chart(ctx, {
+type: 'line',
+data: {
+labels: [<?php foreach ($label as $row) {
+echo "'".$row."',";
+} ?>],
+datasets: [{
+label: 'Statistics',
+data: [<?php foreach ($jumlah_terjual as $row) {
+echo $row.',';
+} ?>],
+borderWidth: 2,
+backgroundColor: '#6777ef',
+borderColor: '#6777ef',
+borderWidth: 2.5,
+pointBackgroundColor: '#ffffff',
+pointRadius: 2
+}]
+}
+});
+
+
+</script>

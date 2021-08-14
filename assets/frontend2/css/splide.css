@@ -1,0 +1,18 @@
+.splide {
+  margin-top: 90px;
+}
+.splide__track {
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.splide__slide img {
+  width: 100%;
+  height: auto;
+}
+.splide__pagination__page.is-active {
+  background: #00b14f;
+  width: 13px;
+  height: 6px;
+  border-radius: 5px;
+}
