@@ -166,7 +166,8 @@ class Auth_model extends CI_Model {
     // Ketika Email Gagal Dikirim
     else
     {
-      echo $this->email->print_debugger(); die;
+      echo $this->email->print_debugger();
+      die;
     }
   }
 
