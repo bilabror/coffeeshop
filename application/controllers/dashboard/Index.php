@@ -43,21 +43,26 @@ class Index extends CI_Controller {
   }
 
   public function qrcode() {
-    $data = $this->db->get('qrcode')->num_rows();
+    $data_qr = $this->db->get('qrcode')->num_rows();
 
     $str = 'ini-adalah-token-random';
     $param = str_shuffle($str);
     $param = urlencode($param);
+    $data['param'] = "{$param}.png";
     $this->load->library('ciqrcode');
     $params['data'] = $param;
     $params['level'] = 'H';
     $params['size'] = 10;
-    $params['savename'] = FCPATH.'tes.png';
+    $params['savename'] = FCPATH."{$param}.png";
     $qrcode = $this->ciqrcode->generate($params);
     if ($qrcode) {
-      if ($data < 1) {
+      if ($data_qr < 1) {
         $this->db->insert('qrcode', ['param' => $param]);
       } else {
+        $qr_param = $this->db->get('qrcode')->row()->param;
+         if(file_exists(FCPATH."{$qr_param}.png")){
+    		unlink(FCPATH."{$qr_param}.png");
+   	 }
         $this->db->update('qrcode', ['param' => $param]);
       }
       $this->load->view('dashboard/qrcode', $data);

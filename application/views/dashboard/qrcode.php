@@ -9,7 +9,7 @@
 <body>
   <div style="display:flex;align-item:center;justify-content:center;width:100%;height:100vh;">
     <div>
-      <img src="<?=base_url() ?>tes.png" style="display:block" />
+      <img src="<?=base_url("{$param}") ?>" style="display:block" />
     </div>
   </div>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
