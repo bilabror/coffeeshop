@@ -20,18 +20,16 @@
               <table class="table table-striped table-hover table-sm" id="table">
                 <thead>
                   <tr>
-                    <th>No</th>
-                    <th>gambar Produk</th>
+                    <th width="5%">No</th>
+                    <th width="10%">gambar</th>
                     <th>Nama Produk</th>
-                    <th>Harga Produk</th>
+                    <th>Harga</th>
                     <th>tgl dibuat</th>
-                    <th>Status</th>
-                    <th>Opsi</th>
+                    <th width="10%">Status</th>
+                    <th width="10%">Opsi</th>
                   </tr>
                 </thead>
-                <tbody>
-
-                </tbody>
+                <tbody></tbody>
               </table>
             </div>
           </div>

@@ -109,8 +109,13 @@ class Pay extends CI_Controller {
       // ketika opsi beli pesanan dikirim / diantar
       if ($pesanan['opsi_beli'] == 1) {
 
-        $data_notifikasi = [
-          'id_user' => 36,
+        $this->db->where('role_id',1);
+        $this->db->or_where('role_id',58);
+        $user_notif = $this->db->get('user')->result();
+        
+        foreach($user_notif as $val){
+          $data_notifikasi = [
+          'id_user' => $val->id,
           'judul' => 'Pesanan Baru',
           'subjudul' => $id_pesanan,
           'link' => "transaksi/online/detail/{$id_pesanan}",
@@ -119,20 +124,31 @@ class Pay extends CI_Controller {
         ];
 
         $this->db->insert('notifikasi', $data_notifikasi);
+        }
+
+        
         redirect(site_url('riwayat/pesanan'));
       }
       // ketika opsi beli pesanan ditempat / booking tempat
       else {
-        $data_notifikasi = [
-          'id_user' => 36,
-          'judul' => 'Pesanan Baru',
-          'subjudul' => $id_pesanan,
-          'link' => "transaksi/booking/detail/{$id_pesanan}",
-          'icon' => 'fas fa-cart-arrow-down',
-          'tgl_buat' => dt()
-        ];
 
-        $this->db->insert('notifikasi', $data_notifikasi);
+        $this->db->where('role_id',1);
+        $this->db->or_where('role_id',58);
+        $user_notif = $this->db->get('user')->result();
+
+        foreach($user_notif as $val){
+          $data_notifikasi = [
+            'id_user' => $val->id,
+            'judul' => 'Pesanan Baru',
+            'subjudul' => $id_pesanan,
+            'link' => "transaksi/booking/detail/{$id_pesanan}",
+            'icon' => 'fas fa-cart-arrow-down',
+            'tgl_buat' => dt()
+          ];
+
+          $this->db->insert('notifikasi', $data_notifikasi);
+        }
+        
         redirect(site_url('riwayat/booking'));
       }
 

@@ -8,7 +8,7 @@ class Ajax extends CI_Controller {
     parent::__construct();
     $this->load->model('Produk_model', 'produk');
     $this->key_rajaongkir = '0c017604e721bbe96b59dbe272f58e9c';
-    $this->key_binderbyte = 'da8b19505795176e5d97647e831706cdfce73f01126980bf48c3728e71ceec80';
+    $this->key_binderbyte = 'ecdf8e3ba5d77d329ab0deec843266226908b77ef0bb59e9a18a0f80d3d19229';
   }
 
   public function count_cart() {

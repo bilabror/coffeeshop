@@ -1,8 +1,19 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+/**
+ * Controller Menu
+ *
+ * Controller ini berperan untuk mengatur bagian Menu
+ * 
+ */
 class Menu extends CI_Controller {
 
+  /**
+	 * Class constructor
+	 *
+	 * @return	void
+	 */
   public function __construct() {
     parent::__construct();
     proteksi();
@@ -11,13 +22,10 @@ class Menu extends CI_Controller {
   }
 
   /**
-  *  Method Index pada controller ini adalah :
-  *   halaman berisi data menu yang bisa kkita atur
-  *   mencakup melihat,menambah,mengedit, dan menghapus
-  *
-  * Url :
-  * 		http://localhost/nama-projek/dashboard/sistem/menu
-  */
+	 * Index Method
+	 *
+	 * @return view
+	 */
   public function index() {
     $data['title'] = 'Menu Group';
     $page = 'dashboard/sistem/menu';
@@ -26,9 +34,10 @@ class Menu extends CI_Controller {
 
 
   /**
-  * Method naikan pada controller ini adalah :
-  *   Proses mengubah urutan satu menu ke atas
-  */
+	 * aksi menaikan urusan menu
+	 *
+	 * @return json
+	 */
   public function naikan() {
     $id = $this->input->post('id', true);
     $urutan = $this->input->post('urutan', true);
@@ -43,9 +52,10 @@ class Menu extends CI_Controller {
 
 
   /**
-  * Method turunkan pada controller ini adalah :
-  *   Proses mengubah urutan satu menu ke bawah
-  */
+	 * aksi menurunkan urusan menu
+	 *
+	 * @return json
+	 */
   public function turunkan() {
     $id = $this->input->post('id', true);
     $urutan = $this->input->post('urutan', true);
@@ -61,9 +71,10 @@ class Menu extends CI_Controller {
 
 
   /**
-  * Method status pada controller ini adalah :
-  *   Proses mengubah status aktif dan tidak aktif
-  */
+	 * aksi mengganti status menu
+	 *
+	 * @return json
+	 */
   public function status() {
     $id = $this->input->post('id', true);
     $status = $this->menu->get_where(['id' => $id])->row_array()['is_active'];
@@ -84,10 +95,10 @@ class Menu extends CI_Controller {
 
 
   /**
-  * Method ajax_list pada controller ini adalah :
-  *   Method yang mengcetak data menu dalam bentuk json_encode dengan datatables
-  *
-  */
+	 * Get data dengan style datatable
+	 *
+	 * @return json
+	 */
   public function get_datatables() {
     $this->menu->get_datatables();
   }
@@ -102,11 +113,11 @@ class Menu extends CI_Controller {
 
 
   /**
-  * Method ajax_edit pada controller ini adalah :
-  *   Method yang mengcetak data menu berdasarkan id dalam bentuk json_encode
-  *   data ini dipanggil dengan ajax
-  *
-  */
+	 * get data berdasarkan id untuk diedit
+	 *
+   * @param int $id kunci table
+	 * @return json
+	 */
   public function ajax_edit($id) {
     $data = $this->menu->get_by_id($id);
     echo json_encode($data);
@@ -114,9 +125,10 @@ class Menu extends CI_Controller {
 
 
   /**
-  * Method ajax_add pada controller ini adalah :
-  *   proses penambahan data menu
-  */
+	 * aksi tambah data
+	 *
+	 * @return json
+	 */
   public function ajax_add() {
 
     /* --- set validasi pada form tambah data menu --- */
@@ -156,9 +168,10 @@ class Menu extends CI_Controller {
 
 
   /**
-  * Method ajax_update pada controller ini adalah :
-  *   proses pengeditan data menu lama ke data menu baru
-  */
+	 * aksi edit data
+	 *
+	 * @return json
+	 */
   public function ajax_update() {
 
     /* --- set validasi pada form tambah data menu --- */
@@ -196,9 +209,11 @@ class Menu extends CI_Controller {
 
 
   /**
-  * Method ajax_delete pada controller ini adalah :
-  *   proses penghapusan data menu
-  */
+	 * aksi hapus data
+	 *
+   * @param int $id kunci table
+	 * @return json
+	 */
   public function ajax_delete($id) {
     $this->menu->delete_by_id($id);
     $this->db->delete('sub_menu', ['menu_id' => $id]);

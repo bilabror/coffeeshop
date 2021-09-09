@@ -1,8 +1,19 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+/**
+ * Controller Poin
+ *
+ * Controller ini berperan untuk mengatur bagian Produk Poin
+ * 
+ */
 class Poin extends CI_Controller {
 
+  /**
+	 * Class constructor
+	 *
+	 * @return	void
+	 */
   public function __construct() {
     parent::__construct();
     $this->load->model('User_model', 'user');
@@ -10,24 +21,77 @@ class Poin extends CI_Controller {
     proteksi();
   }
 
-
-
-
+ /**
+	 * Index Method
+	 *
+	 * @return view
+	 */
   public function index() {
     $data['title'] = 'Produk Poin';
     pages('dashboard/produk/produk_poin', $data);
   }
 
+  /**
+	 * Add method
+	 *
+	 * @return view
+	 */
+  public function add() {
+    $data['title'] = 'Tambah Produk Poin';
+    pages('dashboard/produk/add_produk_poin', $data);
+  }
+
+  /**
+	 * Edit method
+	 *
+   * @param int $id kunci table
+	 * @return view
+	 */
+  public function edit($id) {
+    $data['id'] = $id;
+    $query = "SELECT gambar_produk FROM produk_poin WHERE id = {$id}";
+    $data['gambar_produk'] = $this->db->query($query)->row_array()['gambar_produk'];
+    $data['title'] = 'Edit Produk Poin';
+    pages('dashboard/produk/edit_produk_poin', $data);
+  }
 
 
+   /**
+	 * Get data dengan style datatable
+	 *
+	 * @return json
+	 */
+  public function get_datatables() {
+    $this->p_poin->get_datatables();
+  }
+
+   /**
+	 * get data berdasarkan id untuk diedit
+	 *
+   * @param int $id kunci table
+	 * @return json
+	 */
+  public function ajax_edit($id) {
+    $data = $this->p_poin->get_by_id($id);
+    echo json_encode($data);
+  }
+
+  /**
+	 * aksi ubah status data
+	 *
+	 * @return json
+	 */
   public function status() {
     $id = $this->input->post('id');
     $status = $this->input->post('status');
+    // jika status berawal dari aktif
     if ($status == 1) {
       $status = 0;
       $this->p_poin->update(['id' => $id], ['status' => $status]);
       echo json_encode(array("status" => TRUE));
-    } else
+    } 
+    // jika status berawal dari nonaktif
+    else
     {
       $status = 1;
       $this->p_poin->update(['id' => $id], ['status' => $status]);
@@ -36,33 +100,11 @@ class Poin extends CI_Controller {
 
   }
 
-
-  public function get_datatables() {
-    $this->p_poin->get_datatables();
-  }
-
-  public function add() {
-    $data['title'] = 'Menambahkan Produk Penukaran Poin';
-    pages('dashboard/produk/add_produk_poin', $data);
-  }
-
-
-  // HALAMAN EDIT PRODUK
-  public function edit($id) {
-    $data['id'] = $id;
-    $data['gambar_produk'] = $this->db->query("SELECT gambar_produk FROM produk_poin WHERE id = {$id}")->row_array()['gambar_produk'];
-    $data['title'] = 'Edit Data Produk Penukaran Poin';
-    pages('dashboard/produk/edit_produk_poin', $data);
-  }
-
-
-  // GET DATA PRODUK UNTUK HALAMAN EDIT
-  public function ajax_edit($id) {
-    $data = $this->p_poin->get_by_id($id);
-    echo json_encode($data);
-  }
-
-  // INSERT PRODUK
+  /**
+	 * aksi tambah data
+	 *
+	 * @return json
+	 */
   public function ajax_add() {
     // DEKLARASI VARIABELS
     $nama_produk = htmlspecialchars($this->input->post('nama_produk'), true);
@@ -122,6 +164,7 @@ class Poin extends CI_Controller {
       } else {
         //KETIKA GAMBAR TIDAK ADA YANG DIUPLOAD
         $image_error = array('gambar_produk' => 'Gambar Produk Masih Kosong');
+        $this->session->set_flashdata('success','ditambahkan');
         echo json_encode(["status" => false, 'err' => $image_error]);
       }
 
@@ -129,7 +172,11 @@ class Poin extends CI_Controller {
 
   }
 
-
+/**
+	 * aksi edit data
+	 *
+	 * @return json
+	 */
   public function ajax_update() {
     $id = $this->input->post('id');
     $nama_produk = htmlspecialchars($this->input->post('nama_produk'), true);
@@ -197,15 +244,22 @@ class Poin extends CI_Controller {
 
       // UPDATE DATA PRODUK KE DATABASE
       $this->p_poin->update(['id' => $id], $data);
+      $this->session->set_flashdata('success','diedit');
       echo json_encode(array("status" => TRUE));
 
     }
   }
 
+/**
+	 * aksi hapus data
+	 *
+   * @param int $id kunci table
+	 * @return json
+	 */
   public function ajax_delete($id) {
     $gambar_produk = $this->p_poin->get_by_id($id)->gambar_produk;
     if ($gambar_produk != 'default_produk.png') {
-      unlink(FCPATH . 'uploads/image/produk_poinuk/' . $gambar_produk);
+      unlink(FCPATH . 'uploads/image/produk_poin/' . $gambar_produk);
     } else {}
     $this->p_poin->delete_by_id($id);
 

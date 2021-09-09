@@ -1,20 +1,32 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+/**
+ * Controller General
+ *
+ * Controller ini berperan untuk mengatur bagian Setting Umum
+ * 
+ */
 class General extends CI_Controller {
 
+  /**
+	 * Class constructor
+	 *
+	 * @return	void
+	 */
   public function __construct() {
     parent::__construct();
-    $this->load->model('aplikasi_model', 'aplikasi');
     proteksi();
   }
 
-  // HALAMAN PENGATURAN BASIC
+/**
+	 * Index Method
+	 *
+	 * @return view
+	 */
   public function index() {
     $data['title'] = 'General Setting';
     pages('dashboard/pengaturan/general', $data);
-
-
     if (isset($_POST['submit'])) {
       $this->_update();
 
@@ -22,6 +34,11 @@ class General extends CI_Controller {
 
   }
 
+  /**
+	 * aksi edit data
+	 *
+	 * @return json
+	 */
   private function _update() {
     foreach ($_POST as $key => $val) {
       if ($key != 'logo_toko') $this->db->update('pengaturan', ['konten' => $val], ['key' => $key]);

@@ -20,10 +20,10 @@
                 <table class="table table-striped table-hover table-sm" id="table">
                   <thead>
                     <tr>
-                      <th>Gambar</th>
+                      <th width="15%">Gambar</th>
                       <th>Nama</th>
-                      <th>stok</th>
-                      <th>Opsi</th>
+                      <th width="10%">stok</th>
+                      <th width="10%">Opsi</th>
                     </tr>
                   </thead>
                   <tbody></tbody>
@@ -45,7 +45,7 @@
 
 
 <div class="modal fade" tabindex="-1" role="dialog" id="modal_form">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title"></h5>
@@ -55,13 +55,13 @@
       </div>
       <div class="modal-body">
         <div class="table-responsive">
-          <table class="table" id="table_produk">
+          <table class="table" id="table_produk" width="100%">
             <thead>
               <tr>
-                <th>Gambar Produk</th>
+                <th width="15%">Gambar</th>
                 <th>Nama Produk</th>
-                <th>Stok</th>
-                <th>Opsi</th>
+                <th width="10%">Stok</th>
+                <th width="10%">Opsi</th>
               </tr>
             </thead>
             <tbody></tbody>

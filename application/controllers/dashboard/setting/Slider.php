@@ -1,33 +1,61 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+/**
+ * Controller Slider
+ *
+ * Controller ini berperan untuk mengatur bagian Setting slider
+ * 
+ */
 class Slider extends CI_Controller {
 
+  /**
+	 * Class constructor
+	 *
+	 * @return	void
+	 */
   public function __construct() {
     parent::__construct();
     $this->load->model('Slider_model', 'slider');
     proteksi();
   }
 
+  /**
+	 * Index Method
+	 *
+	 * @return view
+	 */
   public function index() {
     $data['title'] = 'Setting Slider';
     pages('dashboard/pengaturan/slider', $data);
   }
 
-  // GET DATA PRODUK DENGAN DATATABLES
+  /**
+	 * Get data dengan style datatable
+	 *
+	 * @return json
+	 */
   public function get_datatables() {
     $this->slider->get_datatables();
   }
 
 
-
-
+  /**
+	 * get data berdasarkan id untuk diedit
+	 *
+   * @param int $id kunci table
+	 * @return json
+	 */
   public function ajax_edit($id) {
     $data = $this->slider->get_by_id($id);
     echo json_encode($data);
   }
 
-  // INSERT PRODUK
+  /**
+	 * aksi tambah data
+	 *
+	 * @return json
+	 */
   public function ajax_add() {
     // DEKLARASI VARIABELS
     $judul = htmlspecialchars($this->input->post('judul'), TRUE);
@@ -84,8 +112,11 @@ class Slider extends CI_Controller {
 
   }
 
-
-  // UPDATE DATA PRODUK
+/**
+	 * aksi edit data
+	 *
+	 * @return json
+	 */
   public function ajax_update() {
     // DEKLARASI VARIABELS
     $judul = htmlspecialchars($this->input->post('judul'), TRUE);
@@ -150,7 +181,12 @@ class Slider extends CI_Controller {
 
   }
 
-
+/**
+	 * Aksi hapus data
+	 *
+   * @param int $id kunci table
+	 * @return boolean
+	 */ 
   public function ajax_delete($id) {
     $gambar = $this->slider->get_by_id($id)->gambar;
     unlink(FCPATH."uploads/image/slider/{$gambar}");

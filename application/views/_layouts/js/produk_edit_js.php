@@ -123,7 +123,7 @@
       processData: false,
       success: function(data) {
         console.log(data);
-        $('#btnsave').html('Tambahkan');
+        $('#btnsave').html('Tunggu...');
         $("#btnsave").prop("disabled", false);
         if (data.status == false) {
           if (!data.err.gambar_produk == "") {

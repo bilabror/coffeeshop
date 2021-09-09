@@ -1,6 +1,13 @@
 <script src="<?=base_url('assets/function.js') ?>"></script>
 <script>
 
+$(document).ready(function(){
+  $("#form").submit(function(e) {
+      e.preventDefault();
+      save();
+    });
+})
+
   function readURL(input) {
     if (input.files && input.files[0]) {
       var reader = new FileReader();

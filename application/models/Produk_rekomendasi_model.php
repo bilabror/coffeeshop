@@ -1,16 +1,37 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+/**
+ * Model Produk Rekomendasi
+ *
+ * Model ini berperan untuk berinteraksi dengan database table Produk Rekomendasi
+ * 
+ */
 class Produk_rekomendasi_model extends CI_Model {
 
-  var $table = 'produk_rekomendasi';
+  /**
+	 * Nama tabel
+	 *
+	 * @var	string
+	 */
+  private $table = 'produk_rekomendasi';
+
+  /**
+	 * Class constructor
+	 *
+	 * @return	void
+	 */
   public function __construct() {
     parent::__construct();
     $this->load->database();
     $this->load->library('Datatables');
   }
 
-
+  /**
+	 * Configurasi databale
+	 *
+	 * @return	void
+	 */
   private function _config_datatables() {
     $this->datatables->table = $this->table;
     $this->datatables->column_order = [
@@ -28,6 +49,11 @@ class Produk_rekomendasi_model extends CI_Model {
 
   }
 
+  /**
+	 * Get Datatable
+	 *
+	 * @return json
+	 */
   public function get_datatables() {
     $this->_config_datatables();
     $list = $this->datatables->get_datatables();
@@ -55,7 +81,11 @@ class Produk_rekomendasi_model extends CI_Model {
     echo json_encode($output);
   }
 
-
+/**
+	 * Configurasi databale Data Produk
+	 *
+	 * @return	void
+	 */
   private function _config_datatables_produk() {
     $this->datatables->table = $this->table;
     $this->datatables->column_order = [
@@ -73,7 +103,11 @@ class Produk_rekomendasi_model extends CI_Model {
 
   }
 
-
+/**
+	 * Get data Produk
+	 *
+	 * @return	json
+	 */
   public function get_produk() {
     $this->_config_datatables_produk();
     $list = $this->datatables->get_datatables();
@@ -99,23 +133,38 @@ class Produk_rekomendasi_model extends CI_Model {
     echo json_encode($output);
   }
 
-
+ /**
+	 * Get All
+	 *
+	 * @return ArrayObject
+	 */
   public function get() {
-
     $this->db->select('produk.*,kategori.nama_kategori');
     $this->db->from($this->table);
     $this->db->join('kategori', 'produk.id_kategori = kategori.id_kategori');
     $query = $this->db->get();
-
-
     return $query->result();
   }
+
+  /**
+	 * Get berdasarkan id
+	 *
+   * @param int $id kunci table
+	 * @return ArrayObject
+	 */
   public function get_by_id($id) {
     $this->db->from($this->table);
     $this->db->where('id_produk', $id);
     $query = $this->db->get();
     return $query->row();
   }
+
+  /**
+	 * Get berdasarkan sesuai karakter yang diinginkan
+	 *
+   * @param string $like karakter yang dicari
+	 * @return ArrayObject
+	 */
   public function get_like($like) {
     $this->db->select('produk.*,kategori.nama_kategori');
     $this->db->from($this->table);
@@ -124,6 +173,13 @@ class Produk_rekomendasi_model extends CI_Model {
     $query = $this->db->get();
     return $query->result();
   }
+
+  /**
+	 * Get berdasarkan sesuai yang diinginkan
+	 *
+   * @param array $where ambil data berdasarkan apa?
+	 * @return ArrayObject
+	 */
   public function get_where($where) {
     $this->db->select('produk.*,kategori.nama_kategori');
     $this->db->from($this->table);
@@ -133,21 +189,45 @@ class Produk_rekomendasi_model extends CI_Model {
     return $query;
   }
 
+  /**
+	 * Get All
+	 *
+	 * @return ArrayObject
+	 */
   public function get_all() {
     return $this->db->get($this->table);
   }
 
+  /**
+	 * Aksi tambah data
+	 *
+   * @param array $data Data yang akan ditambahkan
+	 * @return int
+	 */
   public function save($data) {
     $this->db->insert($this->table, $data);
     return $this->db->insert_id();
   }
 
+  /**
+	 * Aksi ubah data
+	 *
+   * @param array $data Data yang akan diedit
+   * @param array $where ubah data berdasarkan apa?
+	 * @return int
+	 */
   public function update($data, $where) {
     $this->db
     ->update($this->table, $data, $where);
     return $this->db->affected_rows();
   }
-
+  
+/**
+	 * Aksi hapus data
+	 *
+   * @param int $id kunci table
+	 * @return boolean
+	 */
   public function delete_by_id($id) {
     $this->db->where('id', $id);
     $this->db->delete($this->table);

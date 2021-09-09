@@ -1,24 +1,42 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+/**
+ * Controller User
+ *
+ * Controller ini berperan untuk mengatur bagian User
+ * 
+ */
 class User extends CI_Controller {
 
+  /**
+	 * Class constructor
+	 *
+	 * @return	void
+	 */
   public function __construct() {
     parent::__construct();
     $this->load->model('User_model', 'user');
     proteksi();
   }
 
-
-
-
+  /**
+	 * Index Method
+	 *
+	 * @return view
+	 */
   public function index() {
     $data['role'] = $this->db->get('role')->result_array();
     $data['title'] = 'Data User';
     pages('dashboard/master/user', $data);
   }
 
-
+/**
+	 * Detail Method
+   * @param int $id kunci table
+	 *
+	 * @return view
+	 */
   public function detail($id) {
     $data['user'] = $this->db->get_where('user', ['id' => $id])->row();
     $data['poin'] = $this->db->get_where('poin', ['id_user' => $id])->row()->poin;
@@ -28,7 +46,11 @@ class User extends CI_Controller {
     pages('dashboard/master/user_detail', $data);
   }
 
-
+  /**
+	 * Status Method
+	 *
+	 * @return json
+	 */
   public function status() {
     $id = $this->input->post('id');
     $status = $this->input->post('status');
@@ -45,11 +67,20 @@ class User extends CI_Controller {
 
   }
 
+  /**
+	 * Get data dengan style datatable
+	 *
+	 * @return json
+	 */
   public function get_datatables() {
     $this->user->get_datatables();
   }
 
-
+/**
+	 * aksi Reset/Restart Password
+	 *
+	 * @return json
+	 */
   public function reset_password() {
     $id = htmlspecialchars($this->input->post('id'));
     $data = ['password' => password_hash('12345678', PASSWORD_DEFAULT)];
@@ -57,10 +88,22 @@ class User extends CI_Controller {
     echo json_encode(['status' => true]);
   }
 
+   /**
+	 * get data berdasarkan id untuk diedit
+	 *
+   * @param int $id kunci table
+	 * @return json
+	 */
   public function ajax_edit($id) {
     $data = $this->user->get_by_id($id);
     echo json_encode($data);
   }
+
+  /**
+	 * aksi tambah data
+	 *
+	 * @return json
+	 */
   public function ajax_add() {
     $this->form_validation->set_rules('username', 'username', 'trim|required|min_length[2]');
     $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email|is_unique[user.email]');
@@ -96,13 +139,13 @@ class User extends CI_Controller {
 
       echo json_encode(array("status" => TRUE));
     }
-
-
-
-
-
-
   }
+
+  /**
+	 * aksi edit data
+	 *
+	 * @return json
+	 */
   public function ajax_update() {
 
     $this->form_validation->set_rules('username', 'username', 'trim|required|min_length[2]',
@@ -142,9 +185,14 @@ class User extends CI_Controller {
       $this->user->update(array('id' => $this->input->post('id')), $data);
       echo json_encode(array("status" => TRUE));
     }
-
-
   }
+
+  /**
+	 * Aksi hapus data
+	 *
+   * @param int $id kunci table
+	 * @return json
+	 */
   public function ajax_delete($id) {
     $this->db->delete('notifikasi', ['id_user' => $id]);
     $this->db->delete('keranjang', ['id_user' => $id]);

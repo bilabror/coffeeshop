@@ -1,21 +1,40 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+/**
+ * Controller Bank Acccount
+ *
+ * Controller ini berperan untuk mengatur bagian Setting Rekening Bank
+ * 
+ */
 class Bank_account extends CI_Controller {
 
+  /**
+	 * Class constructor
+	 *
+	 * @return	void
+	 */
   public function __construct() {
     parent::__construct();
     proteksi();
   }
 
-  // HALAMAN PENGATURAN AKUN BANK TOKO
+/**
+	 * Index Method
+	 *
+	 * @return view
+	 */
   public function index() {
     $data['rekening_toko'] = $this->db->get('rekening_toko')->result_array();
     $data['title'] = 'Setting Bank Account';
     pages('dashboard/pengaturan/akun_bank', $data);
   }
 
-  // MENAMBAHKAN AKUN PEMBAYARAN TOKO
+  /**
+	 * aksi tambah data
+	 *
+	 * @return json
+	 */
   public function add_payment() {
     $bank = htmlspecialchars($this->input->post('bank'), true);
     $norek = htmlspecialchars($this->input->post('norek'), true);
@@ -31,7 +50,11 @@ class Bank_account extends CI_Controller {
 
   }
 
-  // EDIT PEMBAYARAN TOKO
+/**
+	 * aksi edit data
+	 *
+	 * @return json
+	 */
   public function edit_payment() {
     $id = $this->input->post('id');
     $bank = htmlspecialchars($this->input->post('bank'), true);
@@ -48,7 +71,12 @@ class Bank_account extends CI_Controller {
 
   }
 
-  //MENGHAPUS PEMBAYARAN TOKO
+/**
+	 * Aksi hapus data
+	 *
+   * @param int $id kunci table
+	 * @return json
+	 */
   public function delete_payment($id) {
     $this->db->delete('rekening_toko', ['id' => $id]);
     echo json_encode(['status' => 'success']);

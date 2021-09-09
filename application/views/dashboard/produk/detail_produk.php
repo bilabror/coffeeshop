@@ -28,7 +28,12 @@
                     <th><?=$produk->nama_produk ?></th>
                   </tr>
                   <tr>
-                    <td>Harga</td>
+                    <td>Harga Awal</td>
+                    <td>:</td>
+                    <th><?=rupiah($produk->harga_produk) ?></th>
+                  </tr>
+                  <tr>
+                    <td>Harga Diskon</td>
                     <td>:</td>
                     <th><?=rupiah($produk->total_harga_produk) ?></th>
                   </tr>

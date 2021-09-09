@@ -6,16 +6,18 @@
 
   $(document).ready(function() {
 
+    $("#modal_form").submit(function(e) {
+      e.preventDefault();
+      save();
+    });
 
     table = $('#table').DataTable({
-
       "processing": true,
       "serverSide": true,
       "ajax": {
         "url": "<?= site_url('dashboard/produk/kategori/get_datatables') ?>",
         "type": "POST"
       },
-
       "columnDefs": [{
         "targets": [-1],
         "orderable": false,
@@ -28,21 +30,20 @@
 
   function add() {
     save_method = 'add';
-    $('#form')[0].reset(); // reset form on modals
+    $('#form')[0].reset();
     $('.form-control').removeClass('is-invalid');
     $('.invalid-feedback').empty();
-    $('#modal_form').modal('show'); // show bootstrap modal
-    $('.modal-title').text('Tambahkan Kategori'); // Set Title to Bootstrap modal title
+    $('#modal_form').modal('show');
+    $('.modal-title').text('Tambahkan Kategori');
     console.log(save_method);
   }
 
   function edit(id) {
     save_method = 'update';
-    $('#form')[0].reset(); // reset form on modals
+    $('#form')[0].reset();
     $('.form-control').removeClass('is-invalid');
     $('.invalid-feedback').empty();
 
-    //Ajax Load data from ajax
     $.ajax({
       url: "<?= site_url('dashboard/produk/kategori/ajax_edit/') ?>" + id,
       type: "POST",
@@ -54,8 +55,8 @@
         $('[name="nama_kategori"]').val(data.nama_kategori);
         $('[name="slug_kategori"]').val(data.slug_kategori);
 
-        $('#modal_form').modal('show'); // show bootstrap modal when complete loaded
-        $('.modal-title').text('Edit Kategori'); // Set title to Bootstrap modal title
+        $('#modal_form').modal('show');
+        $('.modal-title').text('Edit Kategori');
 
       },
       error: function (jqXHR, textStatus, errorThrown) {
@@ -65,8 +66,7 @@
   }
 
   function reload_table() {
-    table.ajax.reload(null,
-      false); //reload datatable ajax
+    table.ajax.reload(null,false);
   }
 
   function save() {
@@ -79,7 +79,6 @@
       url = "<?= site_url('dashboard/produk/kategori/ajax_update') ?>";
     }
 
-    // ajax adding data to database
     $.ajax({
       url: url,
       type: "POST",
@@ -87,8 +86,6 @@
       dataType: "JSON",
       cache: false,
       success: function(data) {
-        //if success close modal and reload ajax table
-
         if (data.status == false) {
 
           $.each(data.err, function(key, value) {
@@ -106,14 +103,13 @@
           if (save_method == 'add') {
             Toast.fire({
               icon: 'success',
-              title: `Kategori produk dberhasil ditambahkan!`
+              title: `Kategori produk ditambahkan!`
             })
           } else
           {
-
             Toast.fire({
               icon: 'success',
-              title: `Kategori produk dberhasil diedit!`
+              title: `Kategori produk diedit!`
             })
           }
 
@@ -122,7 +118,6 @@
       },
       error: function (jqXHR, textStatus, errorThrown) {
         alert('Error adding / update data');
-
       }
     });
   }
@@ -140,7 +135,6 @@
     }).then((result) => {
       if (result.isConfirmed) {
 
-        // ajax delete data to database
         $.ajax({
           url: "<?php echo site_url('dashboard/produk/kategori/ajax_delete/') ?>"+id,
           type: "POST",
@@ -152,7 +146,7 @@
             swal.close();
             Toast.fire({
               icon: 'success',
-              title: `Kategori produk dberhasil dihapus!`
+              title: `Kategori produk dihapus!`
             })
           },
           error: function (jqXHR, textStatus, errorThrown) {

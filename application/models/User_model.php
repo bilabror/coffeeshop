@@ -1,9 +1,25 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+/**
+ * Model User
+ *
+ * Model ini berperan untuk berinteraksi dengan database table User
+ * 
+ */
 class User_model extends CI_Model {
+/**
+	 * Nama tabel
+	 *
+	 * @var	string
+	 */
+  private $table = 'user';
 
-  var $table = 'user';
+  /**
+	 * Class constructor
+	 *
+	 * @return	void
+	 */
   public function __construct() {
     parent::__construct();
     $this->load->database();
@@ -11,6 +27,11 @@ class User_model extends CI_Model {
   }
 
 
+  /**
+	 * Configurasi datatable
+	 *
+	 * @return	void
+	 */
   private function _config_datatables() {
     $this->datatables->table = $this->table;
     $this->datatables->column_order = [null,
@@ -33,6 +54,11 @@ class User_model extends CI_Model {
       'user.role_id = role.id'];
   }
 
+  /**
+	 * Get Datatable
+	 *
+	 * @return json
+	 */
   public function get_datatables() {
     $this->_config_datatables();
     $list = $this->datatables->get_datatables();
@@ -70,9 +96,12 @@ class User_model extends CI_Model {
     echo json_encode($output);
   }
 
-
-
-
+ /**
+	 * Get berdasarkan id
+	 *
+   * @param int $id kunci table
+	 * @return ArrayObject
+	 */
   public function get_by_id($id) {
     $this->db->from($this->table);
     $this->db->where('id', $id);
@@ -80,21 +109,46 @@ class User_model extends CI_Model {
     return $query->row();
   }
 
+  /**
+	 * Get berdasarkan sesuai yang diinginkan
+	 *
+   * @param array $where ambil data berdasarkan apa?
+	 * @return ArrayObject
+	 */
   public function get_where($where) {
     return $this->db->get_where($this->table, $where);
   }
 
+  /**
+	 * Aksi tambah data
+	 *
+   * @param array $data Data yang akan ditambahkan
+	 * @return int
+	 */
   public function save($data) {
     $this->db->insert($this->table, $data);
     return $this->db->insert_id();
   }
 
+  /**
+	 * Aksi ubah data
+	 *
+   * @param array $data Data yang akan diedit
+   * @param array $where ubah data berdasarkan apa?
+	 * @return int
+	 */
   public function update($where, $data) {
     $this->db
     ->update($this->table, $data, $where);
     return $this->db->affected_rows();
   }
 
+  /**
+	 * Aksi hapus data
+	 *
+   * @param int $id kunci table
+	 * @return boolean
+	 */
   public function delete_by_id($id) {
     $this->db->where('id', $id);
     $this->db->delete($this->table);

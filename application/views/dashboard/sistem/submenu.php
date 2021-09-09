@@ -8,8 +8,6 @@
     </div>
 
     <div class="section-body">
-
-
       <div class="row">
         <div class="col-12">
           <div class="card">
@@ -21,13 +19,13 @@
                 <table class="table table-striped table-hover table-sm" id="table">
                   <thead>
                     <tr>
-                      <th scope="col">No</th>
-                      <th scope="col">menu Group</th>
-                      <th scope="col">Title</th>
-                      <th scope="col">Icon</th>
-                      <th scope="col">Url</th>
-                      <th scope="col">Status</th>
-                      <th scope="col">Opsi</th>
+                      <th width="5%">No</th>
+                      <th>menu Group</th>
+                      <th>Title</th>
+                      <th width="5%">Icon</th>
+                      <th>Url</th>
+                      <th width="5%">Status</th>
+                      <th>Opsi</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -38,7 +36,6 @@
           </div>
         </div>
       </div>
-
     </div>
   </section>
 </div>

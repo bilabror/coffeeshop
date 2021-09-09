@@ -5,7 +5,6 @@
 
   $(document).ready(function() {
 
-
     table = $('#table').DataTable({
       "processing": true,
       "serverSide": true,
@@ -24,10 +23,9 @@
 
   function reload_table() {
     table.ajax.reload(null,
-      false); //reload datatable ajax
+      false);
   }
 
-  // MENUJU HALAMAN EDIT PRODUK
   function edit(id) {
     window.location.href = "<?=site_url('dashboard/produk/poin/edit/') ?>"+id;
   }
@@ -67,7 +65,6 @@
 
 
 
-  // MENGHAPUS DATA PRODUK
   function delete_produk(id) {
 
     Swal.fire({
@@ -77,7 +74,7 @@
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
+      confirmButtonText: 'Ya, tentu saja!'
     }).then((result) => {
       if (result.isConfirmed) {
 
@@ -111,3 +108,13 @@
   }
 
 </script>
+
+
+<?php if($this->session->flashdata('success')): ?>
+  <script>
+    Toast.fire({
+      icon: 'success',
+      title: "produk poin berhasil <?=$this->session->flashdata('success')?>"
+    });
+  </script>
+<?php unset($_SESSION['success']); endif;?>

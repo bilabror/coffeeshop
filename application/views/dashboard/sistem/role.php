@@ -8,8 +8,6 @@
     </div>
 
     <div class="section-body">
-
-
       <div class="row">
         <div class="col-12">
           <div class="card">
@@ -21,12 +19,12 @@
                 <table class="table table-striped table-hover table-sm" id="table">
                   <thead class="text-center">
                     <tr>
-                      <th>No</th>
-                      <th>Role</th>
+                      <th width="5%">No</th>
+                      <th width="75%">Role</th>
                       <th>opsi</th>
                     </tr>
                   </thead>
-                  <tbody class="text-center">
+                  <tbody>
                   </tbody>
                 </table>
               </div>
@@ -59,7 +57,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <form id="form" action="#" class="form-horizontal">
+        <form id="form" action="#" class="form-horizontal" method="post">
           <input type="hidden" value="" name="id" />
           <div class="form-body">
             <div class="form-group">
@@ -92,12 +90,12 @@
       </div>
       <div class="modal-body">
         <div class="table-responsive">
-          <table class="table table-striped table-hover">
+          <table class="table table-striped table-hover table-akses-menu">
             <thead>
               <tr>
-                <th scope="col">#</th>
-                <th scope="col">Menu</th>
-                <th scope="col">Akses</th>
+                <th>#</th>
+                <th>Menu</th>
+                <th>Akses</th>
               </tr>
             </thead>
             <tbody id="table-access-menu">
@@ -124,10 +122,10 @@
           <table class="table table-striped table-hover">
             <thead>
               <tr>
-                <th scope="col">#</th>
-                <th scope="col">Menu Utama</th>
-                <th scope="col">Submenu</th>
-                <th scope="col">Akses</th>
+                <th>#</th>
+                <th>Menu Utama</th>
+                <th>Submenu</th>
+                <th>Akses</th>
               </tr>
             </thead>
             <tbody id="table-access-submenu">

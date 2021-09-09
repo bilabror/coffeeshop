@@ -1,18 +1,19 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
-* Class Keranjang Model
-* @property Keranjang | Controller
-*/
-
+ * Model Kategori
+ *
+ * Model ini berperan untuk berinteraksi dengan database table keranjang
+ * 
+ */
 class Keranjang_model extends CI_Model {
 
-  /**
-  * nama table
-  *
-  * @var string
-  */
-  var $table = 'keranjang';
+   /**
+	 * Nama tabel
+	 *
+	 * @var	string
+	 */
+  private $table = 'keranjang';
 
 
 
@@ -54,30 +55,22 @@ class Keranjang_model extends CI_Model {
 
 
   /**
-  * Proses Interaksi dengan database
-  * Mengambil data produk yang ada dikeranjang
-  * berdasarkan @param $where
-  *
-  * @param array $where
-  * @param $where digunakan untuk mengambil data spesifik didatabase
-  *
-  * @return Object
-  */
+	 * Get berdasarkan sesuai yang diinginkan
+	 *
+   * @param array $where ambil data berdasarkan apa?
+	 * @return ArrayObject
+	 */
   public function get_where($where) {
     return $this->db->get_where($this->table, $where);
   }
 
 
   /**
-  * Mengambil data keranjang
-  * berdasarkan @param $where yang diberikan
-  * + join dengan table produk
-  *
-  * @param array $where
-  * @param $where digunakan untuk mengambil data spesifik didatabase
-  *
-  * @return array
-  */
+	 * Get produk dalam keranjang
+	 *
+   * @param array $where ambil data berdasarkan apa?
+	 * @return ArrayObject
+	 */
   public function produk_in_cart($where) {
     $this->db->select('keranjang.*,berat_produk,total_harga_produk');
     $this->db->from('keranjang');
@@ -90,11 +83,11 @@ class Keranjang_model extends CI_Model {
 
 
   /**
-  * Proses Interaksi dengan database
-  * Ketika Menambahkan produk ke database
-  *
-  * @return Array
-  */
+	 * Aksi tambah data
+	 *
+   * @param array items Data yang akan ditambahkan
+	 * @return int
+	 */
   public function add_cart($items) {
 
     $produk = $this->get_where(
@@ -120,11 +113,10 @@ class Keranjang_model extends CI_Model {
 
 
   /**
-  * Proses Interaksi dengan database
-  * Ketika Menambahkan produk ke database
-  *
-  * @return Array
-  */
+	 * Aksi ubah data
+	 *
+	 * @return boolean
+	 */
   public function edit_cart() {
     $id_cart = $this->input->post('id');
     $id_produk = $this->input->post('id_produk');
@@ -147,11 +139,11 @@ class Keranjang_model extends CI_Model {
 
 
   /**
-  * Proses Interaksi dengan database
-  * menghapus produk dalam keranjang
-  *
-  * @return boolean
-  */
+	 * Aksi ubah data
+	 *
+   * @param id $id adalah id pesanan
+	 * @return int
+	 */
   public function remove_keranjang($id) {
 
     $keranjang = $this->db->get_where('keranjang', ['id_keranjang' => $id])->row_array();

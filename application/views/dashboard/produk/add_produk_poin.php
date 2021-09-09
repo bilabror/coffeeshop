@@ -13,7 +13,7 @@
               <h4>Menambahkan Produk Penukaran Poin</h4>
             </div>
             <div class="card-body">
-              <form id="form">
+              <form id="form" method="post" action="">
                 <input type="hidden" name="slug_produk" id="slug_produk">
                 <input type="hidden" name="dsc" id="dsc">
                 <div class="form-row">

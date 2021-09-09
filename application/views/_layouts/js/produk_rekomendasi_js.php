@@ -2,6 +2,7 @@
 <script>
   let table;
   let table_produk;
+  let statusTableProduk = false;
 
 
   $(document).ready(function() {
@@ -27,8 +28,9 @@
 
 
   function get_produk() {
-    $('#modal_form').modal('show'); // show bootstrap modal
-    $('.modal-title').text('Tambahkan Produk Rekomendasi'); // Set Title to Bootstrap modal title
+    $('#modal_form').modal('show');
+    $('.modal-title').text('Tambahkan Produk Rekomendasi');
+    if(statusTableProduk == false){
     table_produk = $('#table_produk').DataTable({
       "processing": true,
       "serverSide": true,
@@ -45,9 +47,19 @@
       "ordering": false,
 
     });
+    statusTableProduk = true;
+    }else{
+    table_produk.ajax.reload(null,
+      false);
+    }
+    
+    
+    
   }
 
   function add_produk(id_produk) {
+    table_produk.ajax.reload(null,
+      false);
     $.ajax({
       url: "<?= site_url('dashboard/produk/rekomendasi/insert'); ?>",
       type: "post",

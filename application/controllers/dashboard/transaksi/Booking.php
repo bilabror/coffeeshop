@@ -52,14 +52,11 @@ class Booking extends CI_Controller {
 
 
   public function invoice_pdf($id) {
-    $data['invoice'] = $this->booking->get_where(['id_pesanan' => $id])->row();
+    $data['invoice'] = $this->pesanan->get_where(['id_pesanan' => $id])->row();
+    $data['booking'] = $this->db->get_where('booking_tempat', ['id_pesanan' => $id])->row();
     $data['bukti_pembayaran'] = $this->db->get_where('bukti_pembayaran', ['id_pesanan' => $id])->row_array();
     $data['bank'] = $this->db->get_where('bank', ['code' => $data['bukti_pembayaran']['nama_bank']])->row_array();
     $data['rekening_toko'] = json_decode($data['bukti_pembayaran']['rekening_toko'], true);
-    $data_address = json_decode($data['invoice']->data_penerima)->address;
-    $data['address'] = "{$data_address->detail}, {$data_address->kec}, {$data_address->kab}, {$data_address->prov}, {$data_address->kode_pos}";
-
-
     $this->db->select('*');
     $this->db->from('item_pesanan');
     $this->db->join('produk', 'produk.id_produk = item_pesanan.id_produk', 'left');
@@ -67,7 +64,7 @@ class Booking extends CI_Controller {
     $query = $this->db->get();
     $data['produk'] = $query->result();
     $data['title'] = 'Detail Transaksi';
-    $this->load->view('pdf/invoice-pesanan', $data);
+    $this->load->view('pdf/invoice-booking', $data);
   }
 
 

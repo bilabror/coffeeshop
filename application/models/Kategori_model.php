@@ -1,10 +1,26 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+/**
+ * Model Kategori
+ *
+ * Model ini berperan untuk berinteraksi dengan database table kategori produk
+ * 
+ */
 class Kategori_model extends CI_Model {
 
-  var $table = 'kategori';
+  /**
+	 * Nama tabel
+	 *
+	 * @var	string
+	 */
+  private $table = 'kategori';
 
+  /**
+	 * Class constructor
+	 *
+	 * @return	void
+	 */
   public function __construct() {
     parent::__construct();
     $this->load->database();
@@ -12,7 +28,11 @@ class Kategori_model extends CI_Model {
   }
 
 
-
+  /**
+	 * Configurasi databale
+	 *
+	 * @return	void
+	 */
   private function _config_datatables() {
     $this->datatables->table = $this->table;
     $this->datatables->column_order = [null,
@@ -22,6 +42,11 @@ class Kategori_model extends CI_Model {
     $this->datatables->order = ['nama_kategori' => 'asc'];
   }
 
+  /**
+	 * Get Datatable
+	 *
+	 * @return json
+	 */
   public function get_datatables() {
     $this->_config_datatables();
     $list = $this->datatables->get_datatables();
@@ -52,11 +77,21 @@ class Kategori_model extends CI_Model {
 
 
 
-
+  /**
+	 * Get All
+	 *  
+	 * @return ArrayObject
+	 */
   public function get() {
     return $this->db->get($this->table)->result();
   }
 
+  /**
+	 * Get berdasarkan id
+	 *
+   * @param int $id kunci table
+	 * @return ArrayObject
+	 */
   public function get_by_id($id) {
     $this->db->from($this->table);
     $this->db->where('id_kategori', $id);
@@ -64,21 +99,46 @@ class Kategori_model extends CI_Model {
     return $query->row();
   }
 
+  /**
+	 * Get berdasarkan sesuai yang diinginkan
+	 *
+   * @param array $where ambil data berdasarkan apa?
+	 * @return ArrayObject
+	 */
   public function get_where($where) {
     return $this->db->get_where($this->table, $where);
   }
 
+  /**
+	 * Aksi tambah data
+	 *
+   * @param array $data Data yang akan ditambahkan
+	 * @return int
+	 */
   public function save($data) {
     $this->db->insert($this->table, $data);
     return $this->db->insert_id();
   }
 
+  /**
+	 * Aksi ubah data
+	 *
+   * @param array $data Data yang akan diedit
+   * @param array $where ubah data berdasarkan apa?
+	 * @return int
+	 */
   public function update($where, $data) {
     $this->db
     ->update($this->table, $data, $where);
     return $this->db->affected_rows();
   }
 
+  /**
+	 * Aksi hapus data
+	 *
+   * @param int $id kunci table
+	 * @return boolean
+	 */
   public function delete_by_id($id) {
     $this->db->where('id_kategori', $id);
     $this->db->delete($this->table);

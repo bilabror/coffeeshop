@@ -90,6 +90,7 @@
   crossorigin="anonymous"
   ></script>
 
+  
 <!-- MyJS -->
 <script src="<?=base_url('assets/frontend2/') ?>js/script.js"></script>
 <script src="<?=base_url('assets/function.js') ?>"></script>
@@ -152,17 +153,16 @@
 
 
   /*------ LIVE CHAT BY TAWK --------*/
-  var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
-  (function() {
-    var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
-    s1.async = true;
-    s1.src = 'https://embed.tawk.to/60c5df047f4b000ac03757ad/1f82euans';
-    s1.charset = 'UTF-8';
-    s1.setAttribute('crossorigin',
-      '*');
-    s0.parentNode.insertBefore(s1,
-      s0);
-  })();
+    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+    (function(){
+    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+    s1.async=true;
+    s1.src='https://embed.tawk.to/613a260bd326717cb6809be4/1ff5i9aht';
+    s1.charset='UTF-8';
+    s1.setAttribute('crossorigin','*');
+    s0.parentNode.insertBefore(s1,s0);
+    })();
+
 
 
   /*------ aksi scroll pada bagian tertentu disuatu halaman --------*/

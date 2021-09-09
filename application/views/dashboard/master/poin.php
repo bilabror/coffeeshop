@@ -8,31 +8,26 @@
     </div>
 
     <div class="section-body">
-
-
       <div class="row">
         <div class="col-12">
           <div class="card">
             <div class="card-header">
             </div>
             <div class="card-body">
-              <d9v class="table-responsive">
-
+              <div class="table-responsive">
                 <table class="table table-striped table-hover table-sm" id="table">
                   <thead>
                     <tr>
-                      <th>No</th>
+                      <th width="5%">No</th>
                       <th>username</th>
                       <th>Email</th>
-                      <th>Poin</th>
-                      <th>Opsi</th>
+                      <th width="15%">Poin</th>
+                      <th width="5%">Opsi</th>
                     </tr>
                   </thead>
-                  <tbody>
-
-                  </tbody>
+                  <tbody></tbody>
                 </table>
-              </d9v>
+              </div>
             </div>
           </div>
         </div>

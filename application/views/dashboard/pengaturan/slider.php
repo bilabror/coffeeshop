@@ -21,10 +21,10 @@
                 <table class="table table-striped table-hover table-sm" id="table">
                   <thead>
                     <tr>
-                      <th>No</th>
-                      <th>Gambar</th>
+                      <th width="5%">No</th>
+                      <th width="10%">Gambar</th>
                       <th>Judul</th>
-                      <th>opsi</th>
+                      <th width="15%">opsi</th>
                     </tr>
                   </thead>
                   <tbody>

@@ -133,15 +133,27 @@
 
         <div class="mt-5 mb-5">
           <div class="row">
-            <div class="col-8">
+            <div class="col-md-4 mb-2">
+              <a 
+                href="<?=site_url('riwayat/invoice_online/'.$invoice->id_pesanan)?>"
+                class="btn w-100 text-white"
+                style="background-color: #db3a34"
+                >
+                <i class="fas fa-print me-2"></i> Cetak
+              </a>
+            </div>
+            <div class="col-md-4 mb-2">
               <button
                 class="btn w-100 text-white"
                 style="background-color: #00b14f"
+                <?php if($invoice->status != 'selesai') : ?>
+                onclick="selesai(<?=$invoice->id_pesanan ?>)"
+                <?php endif;?>
                 >
-                <i class="fas fa-print me-2"></i> Cetak
+                <i class="fas fa-check-circle me-2"></i> <?= $invoice->status != 'selesai' ? 'Terima Pesanan' : 'Pesanan Selesai' ?>
               </button>
             </div>
-            <div class="col-4">
+            <div class="col-md-4">
               <a
                 href="riwayat/pesanan"
                 class="btn text-white w-100"
@@ -158,7 +170,8 @@
 </div>
 <!-- end-MAIN -->
 
-<?php elseif ($invoice->opsi_beli == 2) : ?><!-- ------------------------------------------------------------------------ MAIN -->
+<?php elseif ($invoice->opsi_beli == 2) : ?>
+  <!-- ------------------------------------------------------------------------ MAIN -->
 <div class="container" style="margin-top: 100px">
 
   <div class="bg-light border border-success">
@@ -299,3 +312,61 @@
 <!-- end-MAIN -->
 
 <?php endif; ?>
+
+
+<script>
+  
+  function selesai(idPesanan) {
+    let url = "<?=site_url('riwayat/pesanan_selesai') ?>";
+
+    Swal.fire({
+      title: 'Apakah anda yakin?',
+      text: `Telah menerima pesanan ${idPesanan}`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Ya, Tentu saja!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+
+        $.ajax({
+          url: url,
+          method: 'post',
+          data: {
+            id_pesanan: idPesanan
+          },
+          dataType: 'json',
+          cache: false,
+          success: function(data) {
+            if (data.status == true) {
+
+              Toast.fire({
+                icon: 'success',
+                title: `Pesanan ${idPesanan} telah selesai`
+              })
+              setTimeout(function() {
+                location.reload();
+              }, 2000);
+            }
+          },
+          error: function(jqxhr, textStatus, errorThrown) {
+            console.log(jqxhr);
+            console.log(textStatus);
+            console.log(errorThrown);
+
+            for (key in jqxhr)
+              alert(key + ":" + jqxhr[key])
+            for (key2 in textStatus)
+              alert(key + ":" + textStatus[key])
+            for (key3 in errorThrown)
+              alert(key + ":" + errorThrown[key])
+
+          }
+        })
+      }
+
+    })
+
+  }
+</script>

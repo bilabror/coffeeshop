@@ -17,26 +17,22 @@
               <button type="button" class="add btn btn-primary btn-sm" onclick="add()"><i class="fa fa-plus"></i></button>
             </div>
             <div class="card-body">
-              <d9v class="table-responsive">
-
+              <div class="table-responsive">
                 <table class="table table-striped table-hover table-sm" id="table">
                   <thead>
                     <tr>
-                      <th>No</th>
-                      <th>Nama Kategori</th>
+                      <th width="5%">No</th>
+                      <th width="80%">Nama Kategori</th>
                       <th>Opsi</th>
                     </tr>
                   </thead>
-                  <tbody>
-
-                  </tbody>
+                  <tbody></tbody>
                 </table>
-              </d9v>
+              </div>
             </div>
           </div>
         </div>
       </div>
-
     </div>
   </section>
 </div>
@@ -58,7 +54,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <form action="#" id="form" class="form-horizontal">
+        <form action="#" id="form" class="form-horizontal" method="post">
           <input type="hidden" value="" name="id_kategori" />
           <input name="slug_kategori" placeholder="" class="form-control" type="hidden">
           <div class="form-body">
@@ -72,7 +68,7 @@
       </div>
       <div class="modal-footer bg-whitesmoke br">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" id="btnSave" onclick="save()">SIMPAN</button>
+        <button type="button" class="btn btn-primary" id="btnSave"  onclick="save()">SIMPAN</button>
       </div>
     </div>
   </div>

@@ -1,18 +1,37 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+/**
+ * Model Submenu
+ *
+ * Model ini berperan untuk berinteraksi dengan database table Submenu
+ * 
+ */
 class Submenu_model extends CI_Model {
 
-  var $table = 'sub_menu';
+  /**
+	 * Nama tabel
+	 *
+	 * @var	string
+	 */
+  private $table = 'sub_menu';
 
+  /**
+	 * Class constructor
+	 *
+	 * @return	void
+	 */
   public function __construct() {
     parent::__construct();
     $this->load->database();
     $this->load->library('Datatables');
   }
 
-
-
+  /**
+	 * Configurasi databale
+	 *
+	 * @return	void
+	 */
   private function _config_datatables() {
     $this->datatables->table = $this->table;
     $this->datatables->column_order = [null,
@@ -23,17 +42,19 @@ class Submenu_model extends CI_Model {
       'is_active',
       null
     ];
-    $this->datatables->column_search = ['title'];
+    $this->datatables->column_search = ['sub_menu.title'];
     $this->datatables->order = ['menu' => 'asc'];
-
-
-
     $this->datatables->select = 'sub_menu.*,menu.menu';
     $this->datatables->join = ['menu',
       'sub_menu.menu_id = menu.id'];
 
   }
 
+  /**
+	 * Get Datatable
+	 *
+	 * @return json
+	 */
   public function get_datatables() {
     $this->_config_datatables();
     $list = $this->datatables->get_datatables();
@@ -65,31 +86,56 @@ class Submenu_model extends CI_Model {
     echo json_encode($output);
   }
 
-
-  // GET BERDASARKAN ID
+  /**
+	 * Get berdasarkan id
+	 *
+   * @param int $id kunci table
+	 * @return ArrayObject
+	 */
   public function get_by_id($id) {
     return $this->db->get_where($this->table, ['id' => $id])->row();
   }
 
-
+/**
+	 * Aksi tambah data
+	 *
+   * @param array $data Data yang akan ditambahkan
+	 * @return int
+	 */
   public function save($data) {
     $this->db->insert($this->table, $data);
     return $this->db->insert_id();
   }
 
-
-
+  /**
+	 * Aksi ubah data
+	 *
+   * @param array $data Data yang akan diedit
+   * @param array $where ubah data berdasarkan apa?
+	 * @return int
+	 */
   public function update($data, $where) {
     $this->db->update($this->table, $data, $where);
     return $this->db->affected_rows();
   }
 
-
+/**
+	 * Aksi hapus data
+	 *
+   * @param int $id kunci table
+	 * @return boolean
+	 */
   public function delete_by_id($id) {
     $this->db->where('id', $id);
     $this->db->delete($this->table);
   }
 
+  /**
+	 * Get berdasarkan sesuai yang diinginkan
+	 *
+   * @param array $where ambil data berdasarkan apa?
+	 * @return ArrayObject
+	 */
   public function get_where($where) {
     return $this->db->get_where($this->table, $where);
   }

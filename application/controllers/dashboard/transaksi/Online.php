@@ -5,6 +5,8 @@
 * @property pesanan_model | Model
 */
 
+
+
 class Online extends CI_Controller {
 
   public function __construct() {
@@ -70,6 +72,9 @@ class Online extends CI_Controller {
 
 
   public function invoice_pdf($id) {
+    
+    $mpdf = new \Mpdf\Mpdf();
+
     $data['invoice'] = $this->order_online->get_where(['id_pesanan' => $id])->row();
     $data['bukti_pembayaran'] = $this->db->get_where('bukti_pembayaran', ['id_pesanan' => $id])->row_array();
     $data['bank'] = $this->db->get_where('bank', ['code' => $data['bukti_pembayaran']['nama_bank']])->row_array();
@@ -85,7 +90,10 @@ class Online extends CI_Controller {
     $query = $this->db->get();
     $data['produk'] = $query->result();
     $data['title'] = 'Detail Transaksi';
-    $this->load->view('pdf/invoice-pesanan', $data);
+    $this->load->view('pdf/invoice-online', $data);
+   // $result = $this->load->view('pdf/invoice-online', $data, TRUE);
+   // $mpdf->WriteHTML($result);
+   // $mpdf->Output();
   }
 
 

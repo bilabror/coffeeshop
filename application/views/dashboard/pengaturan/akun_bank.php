@@ -8,7 +8,6 @@
     </div>
 
     <div class="section-body">
-
       <div class="row">
         <div class="col-12">
           <div class="card">
@@ -20,11 +19,11 @@
                 <table class="table table-striped table-hover table-sm" id="table">
                   <thead>
                     <tr>
-                      <th>No</th>
-                      <th>Nama Rekening</th>
+                      <th width="5%">No</th>
+                      <th>Nama Bank</th>
                       <th>Nomor Rekening</th>
                       <th>Atas Nama</th>
-                      <th>opsi</th>
+                      <th width="5%">opsi</th>
                     </tr>
                   </thead>
                   <tbody>

@@ -116,8 +116,7 @@
   <script src="<?=base_url('assets/frontend2/') ?>js/script.js"></script>
   <!-- Bootstrap4 files-->
   <script src="<?= base_url('stisla/'); ?>assets/modules/jquery.min.js"></script>
-</body>
-</html>
+
 
 <script>
 
@@ -138,7 +137,7 @@ $(document).ready(function() {
 if ("<?=$this->session->flashdata('success') ?>") {
 Toast.fire({
 icon: 'success',
-title: "<?=$this->session->flashdata('success') ?>"
+title: "<?=$this->session->flashdata('success');unset($_SESSION['success']) ?>"
 })
 }
 
@@ -181,3 +180,6 @@ console.log(errorThrown);
 });
 }
 </script>
+
+</body>
+</html>

@@ -103,3 +103,13 @@
 
 
 </script>
+
+
+<?php if($this->session->flashdata('success')): ?>
+  <script>
+    Toast.fire({
+      icon: 'success',
+      title: "produk berhasil <?=$this->session->flashdata('success')?>"
+    });
+  </script>
+<?php unset($_SESSION['success']); endif;?>

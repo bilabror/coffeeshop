@@ -1,11 +1,18 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
-* Class Home
-* @property home_model|Model
-*/
+ * Controller Home
+ *
+ * Controller ini berperan untuk mengatur Frontend
+ * 
+ */
 class Home extends CI_Controller {
 
+  /**
+	 * Class constructor
+	 *
+	 * @return	void
+	 */
   public function __construct() {
     parent::__construct();
     $this->load->model('Produk_model', 'produk');
@@ -17,83 +24,57 @@ class Home extends CI_Controller {
 
 
   /**
-  * Halaman Beranda
-  * atau
-  * Halaman Utama
-  */
+	 * Index Method
+	 *
+	 * @return view
+	 */
   public function index() {
-
-    // memanggil method beranda dari Home Model
     $beranda = $this->home->beranda();
-
-    // Memasukan data dari model ke dalam variables
     $data['slider'] = $beranda['slider'];
     $data['rekomendasi'] = $beranda['rekomendasi'];
     $data['produk'] = $beranda['all_produk'];
 
-    // judul halaman
     $data['title'] = 'Beranda';
     pages_frontend('frontend/beranda', $data);
   }
 
 
+  
   /**
-  *
-  * Mengambil data produk Berdasarkan id (@post)
-  * @return json
-  *
-  */
+	 * get data Produk berdasarkan id
+	 *
+	 * @return json
+	 */
   public function produk_by_id() {
-    // memasukan id (@post) kedalam variable
     $id = $this->input->post('id_produk');
-    // get data produk berdasarkan id
     $data = $this->produk->get_by_id($id);
 
-    // return data dengan format Array
     $this->output
-    ->set_content_type('application/json')
-    ->set_output(json_encode($data));
+         ->set_content_type('application/json')
+         ->set_output(json_encode($data));
   }
 
 
+  
   /**
-  *
-  * Halaman detail produk
-  *
-  * @param string $slug
-  *
-  */
+	 * Halaman Detail Produk
+	 *
+   * @param string $slug Slug Produk
+	 * @return view
+	 */
   public function produk($slug) {
-
-    // get data produk berdasarkan slug
-    $produk = $this->produk->get_where(['slug_produk' => $slug]);
-
-    // get data produk random limit 7
-    $this->db->order_by('rand()');
-    $this->db->limit(7);
-    $produk_random = $this->produk->get();
-    $data['produkrand'] = $produk_random;
-
-
-    $this->db->select('ulasan_produk.*,user.username');
-    $this->db->from('ulasan_produk');
-    $this->db->join('user', 'ulasan_produk.id_user = user.id');
-    $this->db->where('id_produk', $produk->row()->id_produk);
-    $this->db->order_by('tgl_buat', 'DESC');
-    $data['ulasan'] = $this->db->get()->result_array();
-    $stmt = $this->db->query('SELECT AVG(rating) AS overall_rating, COUNT(*) AS total_ulasan FROM ulasan_produk WHERE id_produk = '.$produk->row()->id_produk);
-    $data['ulasan_info'] = $stmt->row_array();
-
-
-
-    if ($produk->num_rows() > 0) {
-      $data['produk'] = $produk->row_array();
-      $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row();
-      $data['title'] = 'Home';
+    $model = $this->home->detailProduk($slug);
+    if($model == FALSE) return redirect(site_url());
+    $data['produkrand'] = $model['produkrand'];
+    $data['ulasan'] = $model['ulasan'];
+    $data['ulasan_info'] = $model['ulasan_info'];
+    $data['produk'] = $model['produk'];
+    if (count($model) > 0) {
+      $data['user'] = $model['user'];
       $data['title'] = 'Detail Produk';
       pages_frontend('frontend/detail_produk', $data);
     } else {
-      redirect(site_url());
+      
     }
 
   }

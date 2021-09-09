@@ -1,8 +1,19 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+/**
+ * Controller Utama
+ *
+ * Controller ini berperan untuk mengatur bagian Produk Utama
+ * 
+ */
 class Utama extends CI_Controller {
 
+  /**
+	 * Class constructor
+	 *
+	 * @return	void
+	 */
   public function __construct() {
     parent::__construct();
     $this->load->model('Kategori_model', 'kategori');
@@ -11,54 +22,60 @@ class Utama extends CI_Controller {
   }
 
 
-  // HALAMAN DATA PRODUK
+   /**
+	 * Index Method
+	 *
+	 * @return view
+	 */
   public function index() {
     $data['title'] = 'Data Produk';
     pages('dashboard/produk/produk', $data);
   }
 
-  // HALAMAN DETAIL PRODUK
+   /**
+	 * Detail Method
+	 *
+	 * @return view
+	 */
   public function detail($slug) {
-    $data['produk'] = $this->db->get_where('produk', ['slug_produk' => $slug])->row();
-
-    $this->db->select('*');
-    $this->db->from('item_pesanan');
-    $this->db->join('pesanan', 'item_pesanan.id_pesanan = pesanan.id_pesanan');
-    $this->db->limit(5);
-    $this->db->order_by('tgl_bayar_pesanan', 'desc');
-    $this->db->where('id_produk', $data['produk']->id_produk);
-    $data['pesanan'] = $this->db->get()->result();
-
-    $this->db->select('*');
-    $this->db->from('ulasan_produk');
-    $this->db->join('user', 'ulasan_produk.id_user = user.id');
-    $this->db->where('id_produk', $data['produk']->id_produk);
-    $data['ulasan'] = $this->db->get()->result();
-
-
+    $model = $this->produk->detailPage($slug);
+    $data['produk'] = $model['produk'];
+    $data['pesanan'] = $model['pesanan'];
+    $data['ulasan'] = $model['ulasan'];
     $data['title'] = 'Detail Produk';
     pages('dashboard/produk/detail_produk', $data);
   }
 
-  // HALAMAN TAMBAH PRODUK
+  /**
+	 * Add Method
+	 *
+	 * @return view
+	 */
   public function add() {
-    $data['title'] = 'Tambah Data Produk';
+    $data['title'] = 'Tambah Produk';
     pages('dashboard/produk/add_produk', $data);
   }
 
-  // HALAMAN EDIT PRODUK
+  /**
+	 * Edit Method
+	 *
+	 * @return view
+	 */
   public function edit($id) {
     $data['id_produk'] = $id;
-    $data['id_kategori'] = $this->db->query("SELECT id_kategori FROM produk WHERE id_produk = {$id}")->row_array()['id_kategori'];
-    $data['gambar_produk'] = $this->db->query("SELECT gambar_produk FROM produk WHERE id_produk = {$id}")->row_array()['gambar_produk'];
-    $data['title'] = 'Edit Data Produk';
-    pages('dashboard/produk/add_produk', $data);
+    $query = "SELECT id_kategori,gambar_produk FROM produk WHERE id_produk = {$id}";
+    $sql = $this->db->query($query)->row_array();
+    $data['id_kategori'] = $sql['id_kategori'];
+    $data['gambar_produk'] = $sql['gambar_produk'];
+    $data['title'] = 'Edit Produk';
+    pages('dashboard/produk/edit_produk', $data);
   }
 
-
-
-
-  // INSERT PRODUK
+/**
+	 * aksi tambah data
+	 *
+	 * @return json
+	 */
   public function insert() {
     // DEKLARASI VARIABELS
     $nama_produk = strip_tags($this->input->post('nama_produk'), ENT_QUOTES);
@@ -124,6 +141,7 @@ class Utama extends CI_Controller {
           ];
           // INSERT KE DATABASE
           $insert = $this->produk->save($data);
+          $this->session->set_flashdata('success','ditambahakan');
           echo json_encode(array("status" => TRUE));
         } else {
           // KETIKA GAMBAR TIDAK LOLOS VALIDASI
@@ -140,7 +158,11 @@ class Utama extends CI_Controller {
 
   }
 
-  // UPDATE DATA PRODUK
+  /**
+	 * aksi edit data
+	 *
+	 * @return json
+	 */
   public function update() {
     // DEKLARASI VARIABLES
     $id_produk = $this->input->post('id_produk');
@@ -177,7 +199,6 @@ class Utama extends CI_Controller {
     // KETIKA LOLOS VALIDASI
     else
     {
-
       $data = [
         'nama_produk' => $nama_produk,
         'deskripsi_produk' => $deskripsi_produk,
@@ -221,13 +242,19 @@ class Utama extends CI_Controller {
 
       // UPDATE DATA PRODUK KE DATABASE
       $this->produk->update($data, ['id_produk' => $id_produk]);
+      $this->session->set_flashdata('success','diedit');
       echo json_encode(array("status" => TRUE));
 
     }
 
   }
 
-  // HAPUS DATA PRODUK
+  /**
+	 * aksi hapus data
+	 *
+   * @param int $id kunci table
+	 * @return json
+	 */
   public function ajax_delete($id) {
     $image_produk = $this->produk->get_by_id($id);
     unlink(FCPATH.'uploads/image/produk/'.$image_produk->gambar_produk);
@@ -235,20 +262,31 @@ class Utama extends CI_Controller {
     echo json_encode(["status" => TRUE]);
   }
 
-  // GET DATA PRODUK DENGAN DATATABLES
+ /**
+	 * Get data dengan style datatable
+	 *
+	 * @return json
+	 */
   public function get_datatables() {
     $this->produk->get_datatables();
   }
 
-
-  // GET DATA PRODUK UNTUK HALAMAN EDIT
+ /**
+	 * get data berdasarkan id untuk diedit
+	 *
+   * @param int $id kunci table
+	 * @return json
+	 */
   public function ajax_edit($id) {
     $data = $this->produk->get_by_id($id);
     echo json_encode($data);
   }
 
-
-  // GET DATA KATEGORI
+ /**
+	 * get data kategori
+	 *
+	 * @return json
+	 */
   public function kategori_ajax() {
     $kategori = $this->kategori->get();
     echo json_encode($kategori);

@@ -19,12 +19,12 @@
                 <table class="table table-striped table-hover table-sm" id="table">
                   <thead>
                     <tr>
-                      <th>No</th>
-                      <th>menu</th>
-                      <th>title</th>
-                      <th>icon</th>
+                      <th width="5%">No</th>
+                      <th width="25%">menu</th>
+                      <th width="35%">title</th>
+                      <th width="5%">icon</th>
                       <th>tipe</th>
-                      <th>status</th>
+                      <th width="5%">status</th>
                       <th>opsi</th>
                     </tr>
                   </thead>

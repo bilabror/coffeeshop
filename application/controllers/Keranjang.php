@@ -1,23 +1,29 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
-* Class Keranjang
-* @property Keranjang_model|Model
-*/
-
+ * Controller Keranjang
+ *
+ * Controller ini berperan untuk mengatur keranjang Belanja
+ * 
+ */
 class Keranjang extends CI_Controller {
 
+  /**
+	 * Class constructor
+	 *
+	 * @return	void
+	 */
   public function __construct() {
     parent::__construct();
     harus_login();
     $this->load->model('Keranjang_model', 'keranjang');
   }
 
-
-
   /**
-  * Halaman Keranjang
-  */
+	 * Index Method
+	 *
+	 * @return view
+	 */
   public function index() {
 
     $query = $this->keranjang->index();
@@ -27,17 +33,16 @@ class Keranjang extends CI_Controller {
     $data['items_keranjang'] = $query['items_keranjang'];
     $data['count_keranjang'] = $query['count_keranjang'];
 
-
     $data['title'] = 'Keranjang belanja';
     pages_frontend('frontend/keranjang', $data);
   }
 
 
   /**
-  * Action Penambahan Produk Ke keranjang
-  *
-  * @return JSON
-  */
+	 * aksi tambah data
+	 *
+	 * @return json
+	 */
   public function add_cart() {
 
     $id_user = sud('id_user');
@@ -66,10 +71,10 @@ class Keranjang extends CI_Controller {
 
 
   /**
-  * Action Remove / menghapus produk dalam keranjang
-  *
-  * @RETURN JSON
-  */
+	 * aksi remove produk dalam keranjang
+	 *
+	 * @return json
+	 */
   public function remove_keranjang() {
     $id = $this->input->post('id');
     $data = $this->keranjang->remove_keranjang($id);
@@ -78,11 +83,10 @@ class Keranjang extends CI_Controller {
 
 
   /**
-  * Action Update / Edit produk dalam keranjang
-  * EDIT : kuantitas dan catatan customer
-  *
-  * @RETURN JSON
-  */
+	 * aksi edit data
+	 *
+	 * @return json
+	 */
   public function ajax_update() {
     $data = $this->keranjang->edit_cart();
     echo json_encode($data);
@@ -90,8 +94,11 @@ class Keranjang extends CI_Controller {
 
 
   /**
-  * Menambilkan modal Edit produk dalam keranjang
-  */
+	 * get data berdasarkan id untuk diedit
+	 *
+   * @param int $id kunci table
+	 * @return json
+	 */
   public function ajax_edit($id) {
     $data = $this->keranjang->get_where(['id_keranjang' => $id])->row();
     echo json_encode($data);

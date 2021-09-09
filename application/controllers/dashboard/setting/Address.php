@@ -1,15 +1,29 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+/**
+ * Controller Address
+ *
+ * Controller ini berperan untuk mengatur bagian Setting Alamat Toko
+ * 
+ */
 class Address extends CI_Controller {
 
+  /**
+	 * Class constructor
+	 *
+	 * @return	void
+	 */
   public function __construct() {
     parent::__construct();
-    $this->load->model('aplikasi_model', 'aplikasi');
     proteksi();
   }
 
-  // HALAMAN PENGATURAN BASIC
+  /**
+	 * Index Method
+	 *
+	 * @return view
+	 */
   public function index() {
     $data['title'] = 'Pengaturan alamat toko';
     pages('dashboard/pengaturan/alamat_toko', $data);

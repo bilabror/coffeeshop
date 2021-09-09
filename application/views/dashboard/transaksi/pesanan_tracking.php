@@ -13,7 +13,7 @@
       </div>
     </div>
     <div class="section-body">
-      <h2 class="section-title kurir-resi">September 2018</h2>
+      <h2 class="section-title kurir-resi"></h2>
       <div class="row">
         <div class="col-12">
           <div class="activities">

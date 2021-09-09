@@ -1,25 +1,43 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+/**
+ * Controller Rekomendasi
+ *
+ * Controller ini berperan untuk mengatur bagian Produk Rekomendasi
+ * 
+ */
 class Rekomendasi extends CI_Controller {
 
+  
+/**
+	 * Class constructor
+	 *
+	 * @return	void
+	 */
   public function __construct() {
     parent::__construct();
-
     $this->load->model('Kategori_model', 'kategori');
     $this->load->model('produk_rekomendasi_model', 'produk_rekomendasi');
     proteksi();
   }
 
-
-  // HALAMAN DATA PRODUK
+  /**
+	 * Index Method
+	 *
+	 * @return view
+	 */
   public function index() {
     $data['title'] = 'Produk Rekomendasi';
     pages('dashboard/produk/rekomendasi_produk', $data);
   }
 
 
-  // INSERT PRODUK
+  /**
+	 * aksi tambah data
+	 *
+	 * @return json
+	 */
   public function insert() {
     // DEKLARASI VARIABELS
     $id_produk = $this->input->post('id_produk');
@@ -46,35 +64,54 @@ class Rekomendasi extends CI_Controller {
 
     }
 
-
   }
 
-
-  // HAPUS DATA PRODUK
+/**
+	 * aksi hapus data
+	 *
+   * @param int $id kunci table
+	 * @return json
+	 */
   public function ajax_delete($id) {
     $this->produk_rekomendasi->delete_by_id($id);
     echo json_encode(["status" => TRUE]);
   }
 
-  // GET DATA PRODUK DENGAN DATATABLES
+  /**
+	 * Get data dengan style datatable
+	 *
+	 * @return json
+	 */
   public function get_datatables() {
     $this->produk_rekomendasi->get_datatables();
   }
 
+  /**
+	 * Get data
+	 *
+	 * @return json
+	 */
   public function get_produk() {
     $this->produk_rekomendasi->get_produk();
   }
 
 
-
-  // GET DATA PRODUK UNTUK HALAMAN EDIT
+/**
+	 * get data berdasarkan id untuk diedit
+	 *
+   * @param int $id kunci table
+	 * @return json
+	 */
   public function ajax_edit($id) {
     $data = $this->produk->get_by_id($id);
     echo json_encode($data);
   }
 
-
-  // GET DATA KATEGORI
+/**
+	 * get data kategori
+	 *
+	 * @return json
+	 */
   public function kategori_ajax() {
     $kategori = $this->kategori->get();
     echo json_encode($kategori);

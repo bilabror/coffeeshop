@@ -1,12 +1,20 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+/**
+ * Controller Role
+ *
+ * Controller ini berperan untuk mengatur bagian Role
+ * 
+ */
 class Role extends CI_Controller {
 
-
-
+ /**
+	 * Class constructor
+	 *
+	 * @return	void
+	 */
   public function __construct() {
-
     parent::__construct();
     proteksi();
     $this->load->model('Submenu_model', 'submenu');
@@ -16,20 +24,21 @@ class Role extends CI_Controller {
 
 
   /**
-  *  Method Index pada controller ini adalah :
-  *   halaman berisi data role yang bisa kkita atur
-  *   mencakup melihat,menambah,mengedit, dan menghapus
-  *
-  * Url :
-  * 		http://localhost/nama-projek/dashboard/sistem/role
-  */
+	 * Index Method
+	 *
+	 * @return view
+	 */
   public function index() {
     $data['role'] = $this->role->get_all()->result_array();
     $data['title'] = 'Role';
     pages('dashboard/sistem/role', $data);
   }
 
-
+/**
+	 * Get Data Akses Menu
+	 *
+	 * @return json
+	 */
   public function menu_access($id) {
     $menu = $this->db->get('menu')->result();
     $i = 1;
@@ -48,7 +57,11 @@ class Role extends CI_Controller {
   }
 
 
-
+/**
+	 * Get Data Akses Submenu
+	 *
+	 * @return json
+	 */
   public function submenu_access($id) {
     $this->db->select('sub_menu.*,menu.menu');
     $this->db->from('sub_menu');
@@ -74,7 +87,11 @@ class Role extends CI_Controller {
   }
 
 
-  // proses ubah akses
+  /**
+	 * aksi Ubah akses Menu
+	 *
+	 * @return json
+	 */
   public function change_menu_access() {
 
     $menuId = $this->input->post('menuId');
@@ -93,8 +110,11 @@ class Role extends CI_Controller {
 
   }
 
-
-  // proses ubah akses
+/**
+	 * aksi Ubah akses Submenu
+	 *
+	 * @return json
+	 */
   public function change_submenu_access() {
 
     $submenuId = $this->input->post('submenuId');
@@ -113,30 +133,32 @@ class Role extends CI_Controller {
 
   }
 
-
-  // data ajax untuk halaman utama
+  /**
+	 * Get data dengan style datatable
+	 *
+	 * @return json
+	 */
   public function get_datatables() {
     $this->role->get_datatables();
   }
+
+  /**
+	 * get data berdasarkan id untuk diedit
+	 *
+   * @param int $id kunci table
+	 * @return json
+	 */
   public function ajax_edit($id) {
     $data = $this->role->get_by_id($id);
     echo json_encode($data);
   }
 
 
-  private function _set_validate() {
-    $this->form_validation->set_rules('role',
-      'Role',
-      'required|min_length[3]',
-      [
-        'required' => 'role tidak boleh kosong',
-        'min_length' => 'nama role terlalu pendek'
-      ]
-    );
-  }
-
-
-  // insert data
+  /**
+	 * aksi tambah data
+	 *
+	 * @return json
+	 */
   public function ajax_add() {
 
     $this->_set_validate();
@@ -152,7 +174,11 @@ class Role extends CI_Controller {
     }
   }
 
-  // update data
+  /**
+	 * aksi edit data
+	 *
+	 * @return json
+	 */
   public function ajax_update() {
     $this->_set_validate();
 
@@ -168,11 +194,34 @@ class Role extends CI_Controller {
 
   }
 
-  // delete data
+  /**
+	 * aksi hapus data
+	 *
+   * @param int $id kunci table
+	 * @return json
+	 */
   public function ajax_delete($id) {
     $this->db->delete('user', ['role_id' => $id]);
     $this->role->delete_by_id($id);
     echo json_encode(["status" => TRUE]);
+  }
+
+
+  
+/**
+	 * Set validation Form
+	 *
+	 * @return void
+	 */
+  private function _set_validate() {
+    $this->form_validation->set_rules('role',
+      'Role',
+      'required|min_length[3]',
+      [
+        'required' => 'role tidak boleh kosong',
+        'min_length' => 'nama role terlalu pendek'
+      ]
+    );
   }
 
 

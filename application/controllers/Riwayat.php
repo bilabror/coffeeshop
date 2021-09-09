@@ -5,6 +5,9 @@
 * @property home_model|Model
 */
 
+
+use Mpdf\Mpdf;
+
 class Riwayat extends CI_Controller {
 
   public function __construct() {
@@ -13,6 +16,7 @@ class Riwayat extends CI_Controller {
     harus_customer();
     $this->load->model('Produk_poin_model', 'p_poin');
     $this->load->model('Pesanan_model', 'pesanan');
+    $this->load->model('Order_online_model', 'order_online');
   }
 
 
@@ -118,10 +122,6 @@ class Riwayat extends CI_Controller {
 
 
 
-
-
-
-
   public function poinku() {
     if (isset($_POST['cari'])) {
       $data['produk'] = $this->p_poin->get_like(['nama_produk' => htmlspecialchars($this->input->post('cari'))]);
@@ -188,8 +188,61 @@ class Riwayat extends CI_Controller {
     echo json_encode(['status' => TRUE]);
   }
 
+  public function pesanan_selesai(){
+   $id_pesanan = $this->input->post('id_pesanan');
+   //$id_pesanan = 521627529515; 
+   $id_user = sud('id_user');
+    
+    $data = [
+      'status' => 'selesai',
+      'tgl_selesai_pesanan' => dt()
+    ];
+    $this->db->update('pesanan',$data,['id_pesanan' => $id_pesanan]);
+    // add 1 poin
+    add_poin($id_user);
+    echo json_encode(['status' => TRUE]);
+  }
+
+  public function invoice_booking($id) {
+    $data['invoice'] = $this->pesanan->get_where(['id_pesanan' => $id])->row();
+    $data['booking'] = $this->db->get_where('booking_tempat', ['id_pesanan' => $id])->row();
+    $data['bukti_pembayaran'] = $this->db->get_where('bukti_pembayaran', ['id_pesanan' => $id])->row_array();
+    $data['bank'] = $this->db->get_where('bank', ['code' => $data['bukti_pembayaran']['nama_bank']])->row_array();
+    $data['rekening_toko'] = json_decode($data['bukti_pembayaran']['rekening_toko'], true);
+    $this->db->select('*');
+    $this->db->from('item_pesanan');
+    $this->db->join('produk', 'produk.id_produk = item_pesanan.id_produk', 'left');
+    $this->db->where('item_pesanan.id_pesanan', $data['invoice']->id_pesanan);
+    $query = $this->db->get();
+    $data['produk'] = $query->result();
+    $data['title'] = 'Detail Transaksi';
+    $this->load->view('pdf/invoice-booking', $data);
+  }
+
+  public function invoice_online($id) {
+    
+    $mpdf = new \Mpdf\Mpdf();
+
+    $data['invoice'] = $this->order_online->get_where(['id_pesanan' => $id])->row();
+    $data['bukti_pembayaran'] = $this->db->get_where('bukti_pembayaran', ['id_pesanan' => $id])->row_array();
+    $data['bank'] = $this->db->get_where('bank', ['code' => $data['bukti_pembayaran']['nama_bank']])->row_array();
+    $data['rekening_toko'] = json_decode($data['bukti_pembayaran']['rekening_toko'], true);
+    $data_address = json_decode($data['invoice']->data_penerima)->address;
+    $data['address'] = "{$data_address->detail}, {$data_address->kec}, {$data_address->kab}, {$data_address->prov}, {$data_address->kode_pos}";
 
 
+    $this->db->select('*');
+    $this->db->from('item_pesanan');
+    $this->db->join('produk', 'produk.id_produk = item_pesanan.id_produk', 'left');
+    $this->db->where('item_pesanan.id_pesanan', $data['invoice']->id_pesanan);
+    $query = $this->db->get();
+    $data['produk'] = $query->result();
+    $data['title'] = 'Detail Transaksi';
+    $this->load->view('pdf/invoice-online', $data);
+   // $result = $this->load->view('pdf/invoice-online', $data, TRUE);
+   // $mpdf->WriteHTML($result);
+   // $mpdf->Output();
+  }
 
 
 }

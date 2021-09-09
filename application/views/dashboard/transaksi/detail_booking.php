@@ -125,7 +125,7 @@
           </div>
           <div class="col">
             <div class="text-md-right">
-              <a href="" class="btn btn-danger btn-icon icon-left"><i class="fas fa-print"></i></a>
+              <a href="<?=site_url('dashboard/transaksi/booking/invoice_pdf/'.$invoice->id_pesanan)?>" class="btn btn-danger btn-icon icon-left"><i class="fas fa-print"></i></a>
               <?php if ($invoice->status != 'selesai' && $invoice->status != 'kirim' && $invoice->status != 'batal' && $invoice->status != 'tolak'): ?>
               <button class="btn btn-warning btn-icon icon-left" onclick="edit(<?=$invoice->id_pesanan ?>,'<?=$invoice->status ?>')"><i class="fas fa-edit"></i></button>
               <?php endif; ?>

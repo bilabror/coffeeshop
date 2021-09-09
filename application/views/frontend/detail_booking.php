@@ -115,12 +115,13 @@
         <div class="mt-5 mb-5">
           <div class="row">
             <div class="col-8">
-              <button
+              <a
+                href="<?=site_url('riwayat/invoice_booking/'.$invoice->id_pesanan)?>"
                 class="btn w-100 text-white"
                 style="background-color: #00b14f"
                 >
                 <i class="fas fa-print me-2"></i> Cetak
-              </button>
+              </a>
             </div>
             <div class="col-4">
               <a

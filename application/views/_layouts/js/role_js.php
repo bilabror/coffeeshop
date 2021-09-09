@@ -4,7 +4,6 @@
   let table;
   $(document).ready(function() {
     table = $('#table').DataTable({
-
       "processing": true,
       "serverSide": true,
       "ajax": {
@@ -18,17 +17,23 @@
       ],
       "ordering": false,
     });
+
+    $("#form").submit(function(e) {
+      e.preventDefault();
+      save();
+    });
+
   });
 
 
 
   function add() {
     save_method = 'add';
-    $('#form')[0].reset(); // reset form on modals
+    $('#form')[0].reset();
     $('input.inputan').removeClass('is-invalid');
     $('.invalid-feedback').empty();
-    $('#modal_form').modal('show'); // show bootstrap modal
-    $('.modal-title').text('Tambahkan Role'); // Set Title to Bootstrap modal title
+    $('#modal_form').modal('show');
+    $('.modal-title').text('Tambahkan Role');
     console.log(save_method);
   }
 
@@ -115,11 +120,10 @@
 
   function edit(id) {
     save_method = 'update';
-    $('#form')[0].reset(); // reset form on modals
+    $('#form')[0].reset();
     $('input.inputan').removeClass('is-invalid');
     $('.invalid-feedback').empty();
 
-    //Ajax Load data from ajax
     $.ajax({
       url: "<?= site_url('dashboard/sistem/role/ajax_edit/') ?>" + id,
       type: "POST",
@@ -131,8 +135,8 @@
         $('[name="id"]').val(data.id);
         $('[name="role"]').val(data.role);
 
-        $('#modal_form').modal('show'); // show bootstrap modal when complete loaded
-        $('.modal-title').text('Edit Role'); // Set title to Bootstrap modal title
+        $('#modal_form').modal('show');
+        $('.modal-title').text('Edit Role');
 
       },
       error: function (jqXHR, textStatus, errorThrown) {
@@ -142,7 +146,7 @@
   }
 
   function reload_table() {
-    table.ajax.reload(null, false); //reload datatable ajax
+    table.ajax.reload(null, false);
   }
 
   function save() {
@@ -154,7 +158,6 @@
       url = "<?= site_url('dashboard/sistem/role/ajax_update') ?>";
     }
 
-    // ajax adding data to database
     $.ajax({
       url: url,
       type: "POST",
@@ -162,7 +165,6 @@
       dataType: "JSON",
       cache: false,
       success: function(data) {
-        //if success close modal and reload ajax table
         console.log(data.status);
         if (data.status == false) {
           $('input.inputan').addClass('is-invalid');
@@ -214,7 +216,6 @@
           dataType: "JSON",
           cache: false,
           success: function(data) {
-            //if success reload ajax table
             $('#modal_form').modal('hide');
             reload_table();
             swal.close();
