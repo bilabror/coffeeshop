@@ -143,15 +143,15 @@
               </a>
             </div>
             <div class="col-md-4 mb-2">
+                <?php if($invoice->status == 'kirim') : ?>
               <button
                 class="btn w-100 text-white"
                 style="background-color: #00b14f"
-                <?php if($invoice->status != 'selesai') : ?>
                 onclick="selesai(<?=$invoice->id_pesanan ?>)"
-                <?php endif;?>
                 >
                 <i class="fas fa-check-circle me-2"></i> <?= $invoice->status != 'selesai' ? 'Terima Pesanan' : 'Pesanan Selesai' ?>
               </button>
+                <?php endif;?>
             </div>
             <div class="col-md-4">
               <a

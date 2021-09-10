@@ -65,8 +65,6 @@ class Checkout extends CI_Controller {
         ['required' => ' Pilih Tempat Untuk Anda Duduk']);
       $this->form_validation->set_rules('tanggal', 'Tanggal', 'trim|required',
         ['required' => ' Tentukan Tanggal Anda Datang']);
-      $this->form_validation->set_rules('waktu', 'Waktu', 'trim|required',
-        ['required' => ' Tentukan Waktu Anda Datang']);
     }
     // untuk opsiPembelian 1 dan 2 (semua)
     $this->form_validation->set_rules('nama_penerima', 'Nama Penerima', 'trim|required',
@@ -89,7 +87,7 @@ class Checkout extends CI_Controller {
         'layanan' => form_error('layanan'),
         'no_meja' => form_error('no_meja'),
         'tanggal' => form_error('tanggal'),
-        'waktu' => form_error('waktu')
+        //'waktu' => form_error('waktu')
       ];
       // mengembalikan data dalam bentuk json
       echo json_encode(['status' => FALSE, 'err' => $err]);
